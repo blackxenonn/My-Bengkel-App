@@ -1,33 +1,69 @@
 
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Bengkel Management</title>
+@extends('layouts.app')
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-          rel="stylesheet">
-</head>
-<body>
+@section('title', 'Dashboard - Bengkel Management')
 
-<div class="container py-5">
-    <h2>Dashboard Bengkel Management</h2>
+@section('page-title', 'Dashboard')
 
-    <p>
-        Selamat datang,
-        <strong>{{ auth()->user()->name }}</strong>!
-    </p>
+@section('content')
 
-    <p>Role: {{ auth()->user()->role->name }}</p>
-
-    <form method="POST" action="{{ route('logout') }}">
-        @csrf
-        <button type="submit" class="btn btn-danger">
-            Logout
-        </button>
-    </form>
+<div class="alert alert-primary">
+    Selamat datang, <strong>{{ Auth::user()->name }}</strong>!
+    Anda login sebagai
+    <strong>{{ Auth::user()->role->name }}</strong>.
 </div>
 
-</body>
-</html>
+<div class="row g-3">
+
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <p class="text-muted mb-1">Total Penjualan Hari Ini</p>
+                <h4>Rp 0</h4>
+                <small class="text-muted">Akan terhubung ke database</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <p class="text-muted mb-1">Jumlah Transaksi</p>
+                <h4>0</h4>
+                <small class="text-muted">Hari ini</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <p class="text-muted mb-1">Jumlah Produk</p>
+                <h4>0</h4>
+                <small class="text-muted">Data produk</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <p class="text-muted mb-1">Stok Menipis</p>
+                <h4>0</h4>
+                <small class="text-muted">Perlu diperiksa</small>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="card shadow-sm border-0 mt-4">
+    <div class="card-body">
+        <h5>Aktivitas Sistem</h5>
+        <p class="text-muted mb-0">
+            Ringkasan aktivitas dan transaksi akan ditampilkan di sini.
+        </p>
+    </div>
+</div>
+
+@endsection
