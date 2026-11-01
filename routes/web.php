@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CategoryController;
 
 // Halaman utama diarahkan ke login
 Route::get('/', function () {
@@ -27,29 +28,35 @@ Route::post('/logout', [AuthController::class, 'logout'])
 // Halaman setelah login
 Route::middleware('auth')->group(function () {
 
-    // Dashboard sementara untuk semua role
+    // Dashboard untuk semua role yang sudah login
     Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->name('dashboard');
+        ->name('dashboard');
 
     // Khusus Owner
     Route::middleware('role:owner')->group(function () {
+
         Route::get('/owner', function () {
             return 'Halaman khusus Owner';
-        });
+        })->name('owner');
+
+        // Manajemen kategori
+        Route::resource('categories', CategoryController::class)
+            ->except(['show']);
+
     });
 
     // Khusus Kasir
     Route::middleware('role:kasir')->group(function () {
         Route::get('/pos', function () {
             return 'Halaman POS Kasir';
-        });
+        })->name('pos');
     });
 
     // Khusus Gudang
     Route::middleware('role:gudang')->group(function () {
         Route::get('/inventory', function () {
             return 'Halaman Inventaris Gudang';
-        });
+        })->name('inventory');
     });
 
 });

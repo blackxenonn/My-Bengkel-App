@@ -82,7 +82,7 @@
                     ADMINISTRASI
                 </div>
                 <a href="#">Data Produk</a>
-                <a href="#">Kategori</a>
+                <a href="{{ route('categories.index') }}">Kategori</a>
                 <a href="#">Karyawan</a>
                 <a href="#">Laporan</a>
             @endif
