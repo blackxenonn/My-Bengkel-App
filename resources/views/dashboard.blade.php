@@ -5,6 +5,7 @@
 
 @section('page-title', 'Dashboard')
 
+
 @section('content')
 
 <div class="alert alert-primary">
@@ -16,41 +17,42 @@
 <div class="row g-3">
 
     <div class="col-md-3">
-        <div class="card shadow-sm border-0">
+        <div class="card shadow-sm border-0 h-100">
             <div class="card-body">
-                <p class="text-muted mb-1">Total Penjualan Hari Ini</p>
-                <h4>Rp 0</h4>
-                <small class="text-muted">Akan terhubung ke database</small>
+                <p class="text-muted mb-1">Penjualan Hari Ini</p>
+                <h4>
+                    Rp {{ number_format($totalSalesToday, 0, ',', '.') }}
+                </h4>
             </div>
         </div>
     </div>
 
     <div class="col-md-3">
-        <div class="card shadow-sm border-0">
+        <div class="card shadow-sm border-0 h-100">
             <div class="card-body">
-                <p class="text-muted mb-1">Jumlah Transaksi</p>
-                <h4>0</h4>
-                <small class="text-muted">Hari ini</small>
+                <p class="text-muted mb-1">Transaksi Hari Ini</p>
+                <h4>{{ $totalTransactionsToday }}</h4>
             </div>
         </div>
     </div>
 
     <div class="col-md-3">
-        <div class="card shadow-sm border-0">
+        <div class="card shadow-sm border-0 h-100">
             <div class="card-body">
-                <p class="text-muted mb-1">Jumlah Produk</p>
-                <h4>0</h4>
-                <small class="text-muted">Data produk</small>
+                <p class="text-muted mb-1">Jumlah Produk Aktif</p>
+                <h4>{{ $totalProducts }}</h4>
             </div>
         </div>
     </div>
 
     <div class="col-md-3">
-        <div class="card shadow-sm border-0">
+        <div class="card shadow-sm border-0 h-100">
             <div class="card-body">
                 <p class="text-muted mb-1">Stok Menipis</p>
-                <h4>0</h4>
-                <small class="text-muted">Perlu diperiksa</small>
+                <h4>{{ $lowStockProducts }}</h4>
+                <small class="text-muted">
+                    Produk mencapai batas stok minimum
+                </small>
             </div>
         </div>
     </div>
@@ -61,9 +63,11 @@
     <div class="card-body">
         <h5>Aktivitas Sistem</h5>
         <p class="text-muted mb-0">
-            Ringkasan aktivitas dan transaksi akan ditampilkan di sini.
+            Riwayat transaksi dan aktivitas stok akan ditampilkan
+            setelah modul transaksi dan inventaris selesai dibuat.
         </p>
     </div>
 </div>
 
 @endsection
+

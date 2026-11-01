@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 
 // Halaman utama diarahkan ke login
 Route::get('/', function () {
@@ -27,9 +28,8 @@ Route::post('/logout', [AuthController::class, 'logout'])
 Route::middleware('auth')->group(function () {
 
     // Dashboard sementara untuk semua role
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->name('dashboard');
 
     // Khusus Owner
     Route::middleware('role:owner')->group(function () {
