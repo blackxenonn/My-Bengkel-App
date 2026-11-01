@@ -1,0 +1,55 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+
+// Halaman utama diarahkan ke login
+Route::get('/', function () {
+    return redirect()->route('login');
+});
+
+// Login
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])
+        ->name('login');
+
+    Route::post('/login', [AuthController::class, 'login'])
+        ->middleware('throttle:5,1')
+        ->name('login.post');
+});
+
+// Logout
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->middleware('auth')
+    ->name('logout');
+
+// Halaman setelah login
+Route::middleware('auth')->group(function () {
+
+    // Dashboard sementara untuk semua role
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    // Khusus Owner
+    Route::middleware('role:owner')->group(function () {
+        Route::get('/owner', function () {
+            return 'Halaman khusus Owner';
+        });
+    });
+
+    // Khusus Kasir
+    Route::middleware('role:kasir')->group(function () {
+        Route::get('/pos', function () {
+            return 'Halaman POS Kasir';
+        });
+    });
+
+    // Khusus Gudang
+    Route::middleware('role:gudang')->group(function () {
+        Route::get('/inventory', function () {
+            return 'Halaman Inventaris Gudang';
+        });
+    });
+
+});
