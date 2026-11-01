@@ -53,7 +53,7 @@
 
         <aside class="col-md-2 sidebar p-3">
             <div class="brand">
-                Bengkel Management
+                My-Bengkel-App
             </div>
 
             <div class="text-white-50 small px-3 mb-3">
@@ -69,11 +69,17 @@
             @endif
 
             @if(in_array(Auth::user()->role?->name, ['owner', 'kasir']))
-                <a href="{{ url('/pos') }}">POS / Kasir</a>
+                <a href="{{ route('pos') }}">POS / Kasir</a>
             @endif
 
             @if(in_array(Auth::user()->role?->name, ['owner', 'gudang']))
-                <a href="{{ url('/inventory') }}">Inventaris</a>
+                <a href="{{ route('stock-movements.index') }}">
+                    Inventaris
+                </a>
+
+                <a href="{{ route('stock-movements.create') }}">
+                    Tambah Pergerakan Stok
+                </a>
             @endif
 
             @if(Auth::user()->role?->name === 'owner')
@@ -81,10 +87,13 @@
                 <div class="text-white-50 small px-3 mb-2">
                     ADMINISTRASI
                 </div>
-                <a href="#">Data Produk</a>
+                <a href="{{ route('products.index') }}"
+                  class="nav-link text-white">
+                    Data Produk
+                </a>
                 <a href="{{ route('categories.index') }}">Kategori</a>
-                <a href="#">Karyawan</a>
-                <a href="#">Laporan</a>
+                <a href="{{ route('employees.index') }}">Karyawan</a>
+                <a href="{{ route('reports.index') }}">Laporan</a>
             @endif
 
             <hr class="border-secondary">
@@ -116,6 +125,8 @@
 
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

@@ -2,35 +2,24 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+#[Fillable([
+    'category_id',
+    'sku',
+    'name',
+    'unit',
+    'cost_price',
+    'selling_price',
+    'stock',
+    'minimum_stock',
+    'is_active',
+])]
 class Product extends Model
 {
-    protected $fillable = [
-        'category_id',
-        'sku',
-        'name',
-        'unit',
-        'cost_price',
-        'selling_price',
-        'stock',
-        'minimum_stock',
-        'is_active',
-    ];
-
-    protected function casts(): array
-    {
-        return [
-            'cost_price' => 'decimal:2',
-            'selling_price' => 'decimal:2',
-            'stock' => 'integer',
-            'minimum_stock' => 'integer',
-            'is_active' => 'boolean',
-        ];
-    }
-
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
