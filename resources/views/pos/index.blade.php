@@ -255,6 +255,8 @@
     }
 </style>
 
+<input type="hidden" id="csrfToken" value="{{ csrf_token() }}">
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -540,21 +542,85 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Konfirmasi pembayaran sementara
-    confirmPayment.addEventListener('click', function () {
-        alert(
-            'Validasi pembayaran berhasil!\n\n' +
-            'Total: ' + formatRupiah(getCartTotal()) + '\n' +
-            'Dibayar: ' + formatRupiah(Number(paidAmount.value)) + '\n' +
-            'Kembalian: ' + formatRupiah(
-                Number(paidAmount.value) - getCartTotal()
-            ) +
-            '\n\nPenyimpanan transaksi akan diaktifkan pada tahap berikutnya.'
-        );
+    // Simpan transaksi ke database
+    confirmPayment.addEventListener('click', async function () {
+        const button = this;
+
+        // Pastikan keranjang tidak kosong
+        if (Object.keys(cart).length === 0) {
+            alert('Keranjang masih kosong.');
+            return;
+        }
+
+        const total = getCartTotal();
+        const paid = Number(paidAmount.value);
+
+        // Validasi pembayaran
+        if (!Number.isFinite(paid) || paid < total) {
+            alert('Jumlah pembayaran tidak mencukupi.');
+            return;
+        }
+
+        // Siapkan data produk dan jumlah pembelian
+        const items = Object.values(cart).map(item => ({
+            product_id: Number(item.id),
+            quantity: Number(item.quantity)
+        }));
+
+        button.disabled = true;
+        button.textContent = 'Memproses...';
+
+        try {
+            const response = await fetch("{{ route('pos.checkout') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': document.getElementById('csrfToken').value
+                },
+                body: JSON.stringify({
+                    items: items,
+                    paid_amount: paid
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                const errors = Object.values(data.errors || {}).flat();
+
+                throw new Error(
+                    errors.join('\n') ||
+                    data.message ||
+                    'Transaksi gagal diproses.'
+                );
+            }
+
+            // Transaksi berhasil
+            alert(
+                'TRANSAKSI BERHASIL!\n\n' +
+                'Nomor Invoice: ' + data.invoice_number + '\n' +
+                'Total: ' + formatRupiah(data.total) + '\n' +
+                'Dibayar: ' + formatRupiah(data.paid_amount) + '\n' +
+                'Kembalian: ' + formatRupiah(data.change_amount)
+            );
+
+            // Muat ulang halaman agar stok terbaru ditampilkan
+            window.location.reload();
+
+        } catch (error) {
+            // Keranjang tetap dipertahankan jika transaksi gagal
+            alert('Transaksi gagal:\n' + error.message);
+
+            button.disabled = false;
+            button.textContent = 'Konfirmasi Pembayaran';
+        }
     });
 
     renderCart();
+    
 });
+
 </script>
 
 @endsection

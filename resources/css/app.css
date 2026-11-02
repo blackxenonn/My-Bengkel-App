@@ -7,3 +7,89 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+/* ========================================
+   GLOBAL STYLE
+======================================== */
+
+body {
+    background: #f5f6fa;
+}
+
+/* ========================================
+   SIDEBAR
+======================================== */
+
+.sidebar {
+    min-height: 100vh;
+    background: #172033;
+}
+
+.sidebar a {
+    display: block;
+    color: #cbd5e1;
+    text-decoration: none;
+    padding: 11px 16px;
+    border-radius: 7px;
+    margin-bottom: 5px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* HOVER */
+.sidebar a:hover {
+    background: #29364d;
+    color: white;
+}
+
+/* ACTIVE MENU */
+.sidebar a.active {
+    background: #0d6efd;
+    color: white;
+    font-weight: 600;
+}
+
+/* ========================================
+   BRAND
+======================================== */
+
+.brand {
+    color: white;
+    font-size: 19px;
+    font-weight: bold;
+    padding: 20px 16px;
+}
+
+/* ========================================
+   MAIN CONTENT
+======================================== */
+
+.main-content {
+    padding: 25px;
+}
+
+/* ========================================
+   PRINT TRANSACTION RECEIPT
+======================================== */
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    #receipt,
+    #receipt * {
+        visibility: visible;
+    }
+
+    #receipt {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        box-shadow: none !important;
+    }
+
+    .btn {
+        display: none !important;
+    }
+}

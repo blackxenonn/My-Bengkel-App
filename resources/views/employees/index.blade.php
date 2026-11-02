@@ -40,16 +40,15 @@
     </div>
 @endif
 
+{{-- Tombol Tambah Karyawan --}}
+<div class="d-flex justify-content-end mb-4">
+    <a href="{{ route('employees.create') }}" class="btn btn-primary">
+        + Tambah Karyawan
+    </a>
+</div>
+
 <div class="card border-0 shadow-sm">
     <div class="card-body">
-
-        {{-- Tombol Tambah Karyawan --}}
-        <div class="d-flex justify-content-end mb-3">
-            <a href="{{ route('employees.create') }}" class="btn btn-primary">
-                <i class="bi bi-person-plus"></i>
-                + Tambah Karyawan
-            </a>
-        </div>
 
         {{-- Tabel Karyawan --}}
         <div class="table-responsive">

@@ -14,7 +14,7 @@
     <div class="card shadow-sm border-0" style="width: 100%; max-width: 420px;">
         <div class="card-body p-4">
 
-            <h3 class="text-center mb-2">Bengkel Management</h3>
+            <h3 class="text-center mb-2">My-Bengkel-App</h3>
             <p class="text-center text-muted mb-4">
                 Silakan masuk ke akun Anda
             </p>

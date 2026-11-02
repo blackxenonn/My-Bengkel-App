@@ -10,6 +10,9 @@ use App\Http\Controllers\PosController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\OwnerController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\CancellationRequestController;
+
 
 // Halaman utama diarahkan ke login
 Route::get('/', function () {
@@ -58,13 +61,37 @@ Route::middleware('auth')->group(function () {
         //Manajemen Laporan
         Route::get('/reports', [ReportController::class, 'index'])
             ->name('reports.index');
+        
+        Route::post(
+            '/transactions/{transaction}/cancel',
+            [TransactionController::class, 'cancel']
+        )->name('transactions.cancel');
+
+        Route::get(
+            '/cancellation-requests',
+            [CancellationRequestController::class, 'index']
+        )->name('cancellation-requests.index');
 
     });
 
     // Khusus Kasir
     Route::middleware('role:kasir')->group(function () {
-        Route::get('/pos', [PosController::class, 'index'])
-            ->name('pos');
+        Route::get('/pos', [PosController::class, 'index'])->name('pos');
+
+        Route::post('/pos/checkout', [PosController::class, 'checkout'])
+            ->name('pos.checkout');
+        
+        Route::get('/transactions', [TransactionController::class, 'index'])
+            ->name('transactions.index');
+
+        Route::get('/transactions/{transaction}', [TransactionController::class, 'show'])
+            ->name('transactions.show');
+        
+        // Pengajuan pembatalan oleh kasir
+        Route::post(
+            '/transactions/{transaction}/request-cancellation',
+            [TransactionController::class, 'requestCancellation']
+        )->name('transactions.request-cancellation');
     });
 
     // Khusus Gudang
