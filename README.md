@@ -3,9 +3,8 @@
 
 ### Sistem Manajemen Bengkel Berbasis Web
 
-Aplikasi untuk membantu pengelolaan transaksi penjualan, inventaris
-produk, pergerakan stok, pengguna, dan laporan operasional bengkel dalam
-satu sistem.
+Mengelola transaksi, inventaris, pergerakan stok, pengguna, dan laporan
+operasional bengkel dalam satu aplikasi.
 
 ```{=html}
 <p>
@@ -20,15 +19,15 @@ satu sistem.
 ```{=html}
 <p>
 ```
-`<a href="#-fitur-aplikasi">`{=html}Fitur`</a>`{=html} •
+`<a href="#-fitur-utama">`{=html}Fitur`</a>`{=html} •
 `<a href="#-teknologi">`{=html}Teknologi`</a>`{=html} •
-`<a href="#-instalasi">`{=html}Instalasi`</a>`{=html} •
 `<a href="#-alur-sistem">`{=html}Alur Sistem`</a>`{=html} •
-`<a href="#-struktur-peran">`{=html}Peran`</a>`{=html} •
-`<a href="#-status-pengembangan">`{=html}Roadmap`</a>`{=html}
+`<a href="#-instalasi">`{=html}Instalasi`</a>`{=html} •
+`<a href="#-roadmap-pengembangan">`{=html}Roadmap`</a>`{=html}
 ```{=html}
 </p>
 ```
+[📦 Lihat Repository](https://github.com/muhammadnafis23/my-bengkel-app)
 :::
 
 ------------------------------------------------------------------------
@@ -36,18 +35,21 @@ satu sistem.
 ## 📌 Tentang Project
 
 **My Bengkel App** adalah aplikasi manajemen bengkel berbasis web yang
-dirancang untuk mengelola aktivitas operasional secara terstruktur.
-Sistem ini menyediakan fitur kasir/POS, pengelolaan produk, pencatatan
-pergerakan stok, manajemen karyawan, serta laporan penjualan.
+dirancang untuk membantu pengelolaan aktivitas operasional secara lebih
+terstruktur. Aplikasi ini menyediakan fitur kasir atau *Point of Sale*
+(POS), pengelolaan produk, pencatatan pergerakan stok, manajemen
+karyawan, serta laporan penjualan.
 
-Aplikasi menerapkan pembagian hak akses berdasarkan peran pengguna agar
-setiap bagian hanya dapat mengakses fitur sesuai tanggung jawabnya.
+Sistem menerapkan pembagian hak akses berdasarkan peran pengguna
+(*Role-Based Access Control*) sehingga setiap pengguna hanya dapat
+mengakses fitur sesuai tanggung jawabnya.
 
-> \[!NOTE\] Project ini masih dalam tahap pengembangan. Beberapa fitur
-> lanjutan, termasuk proses persetujuan pengajuan pembatalan transaksi
-> oleh Owner, masih dalam pengerjaan.
+> \[!NOTE\] Project ini masih dalam tahap pengembangan. Fitur
+> persetujuan dan penolakan pengajuan pembatalan transaksi oleh Owner,
+> pengujian menyeluruh, serta deployment masih menjadi pekerjaan
+> lanjutan.
 
-## ✨ Fitur Aplikasi
+## ✨ Fitur Utama
 
 ```{=html}
 <details open>
@@ -92,7 +94,7 @@ setiap bagian hanya dapat mengakses fitur sesuai tanggung jawabnya.
 </details>
 ```
 ```{=html}
-<details open>
+<details>
 ```
 ```{=html}
 <summary>
@@ -113,7 +115,7 @@ setiap bagian hanya dapat mengakses fitur sesuai tanggung jawabnya.
 </details>
 ```
 ```{=html}
-<details open>
+<details>
 ```
 ```{=html}
 <summary>
@@ -133,12 +135,12 @@ setiap bagian hanya dapat mengakses fitur sesuai tanggung jawabnya.
 </details>
 ```
 ```{=html}
-<details open>
+<details>
 ```
 ```{=html}
 <summary>
 ```
-`<strong>`{=html}👥 Manajemen Karyawan`</strong>`{=html}
+`<strong>`{=html}👥 Manajemen Karyawan & Hak Akses`</strong>`{=html}
 ```{=html}
 </summary>
 ```
@@ -152,7 +154,7 @@ setiap bagian hanya dapat mengakses fitur sesuai tanggung jawabnya.
 </details>
 ```
 ```{=html}
-<details open>
+<details>
 ```
 ```{=html}
 <summary>
@@ -171,8 +173,8 @@ setiap bagian hanya dapat mengakses fitur sesuai tanggung jawabnya.
 **Alur pengajuan oleh Kasir:** Kasir dapat mengirim pengajuan pembatalan
 dengan alasan. Pengajuan disimpan sebagai `pending` dan transaksi tetap
 berstatus selesai sampai diproses oleh Owner. Halaman daftar pengajuan
-untuk Owner sudah tersedia; proses persetujuan dan penolakan masih
-menjadi pekerjaan lanjutan.
+untuk Owner sudah tersedia, sedangkan proses persetujuan dan penolakan
+masih dalam pengembangan.
 
 ```{=html}
 </details>
@@ -199,14 +201,12 @@ menjadi pekerjaan lanjutan.
 ## 🧑‍💼 Struktur Peran
 
   -----------------------------------------------------------------------
-  Peran                               Tanggung jawab utama
+  Peran                               Tanggung Jawab
   ----------------------------------- -----------------------------------
-  **Owner**                           Akses dashboard, data produk dan
-                                      kategori, akun karyawan, laporan,
-                                      serta pengelolaan pembatalan
-                                      transaksi. Owner juga memiliki
-                                      akses lintas fitur sesuai aturan
-                                      middleware aplikasi.
+  **Owner**                           Mengakses dashboard, data produk
+                                      dan kategori, akun karyawan,
+                                      laporan, serta pengelolaan
+                                      pembatalan transaksi.
 
   **Kasir**                           Melayani transaksi melalui POS,
                                       melihat riwayat dan detail
@@ -241,26 +241,33 @@ menjadi pekerjaan lanjutan.
 
 ## 🗺️ Alur Sistem
 
+Diagram berikut menggambarkan alur utama aplikasi berdasarkan peran
+pengguna dan proses transaksi.
+
 ``` mermaid
 flowchart TD
-    A[Login] --> B{Validasi Role}
+    A([Login]) --> B{Validasi Role}
+
     B -->|Owner| C[Dashboard Admin]
     B -->|Kasir| D[Halaman POS]
     B -->|Gudang| E[Manajemen Stok]
+
     C --> G[Laporan]
     C --> H[Inventaris]
     C --> I[Manajemen Pengguna]
+
     D --> J[Keranjang]
     J --> K[Pembayaran]
     K --> L[Validasi Backend]
     L --> M[Transaksi Berhasil]
     M --> N[Stok Berkurang]
-    M --> O[Struk]
-    E --> P[Stok Masuk/Keluar]
+    M --> O[Cetak Struk]
+
+    E --> P[Stok Masuk / Keluar]
     P --> Q[Riwayat Pergerakan Stok]
 ```
 
-### Alur checkout
+### 🔁 Alur Checkout
 
 1.  Kasir memilih produk dan memasukkannya ke keranjang.
 2.  Sistem menghitung total belanja.
@@ -285,21 +292,21 @@ Pastikan perangkat sudah memiliki:
 -   Git.
 -   Laragon atau lingkungan server lokal setara.
 
-### 2. Clone repository
+### 2. Clone Repository
 
 ``` bash
 git clone https://github.com/muhammadnafis23/my-bengkel-app.git
 cd my-bengkel-app
 ```
 
-### 3. Install dependency
+### 3. Install Dependency
 
 ``` bash
 composer install
 npm install
 ```
 
-### 4. Siapkan file environment
+### 4. Siapkan File Environment
 
 Salin `.env.example` menjadi `.env`:
 
@@ -313,7 +320,7 @@ Buat database MySQL dengan nama:
 CREATE DATABASE bengkel_management;
 ```
 
-Sesuaikan konfigurasi database pada `.env`:
+Sesuaikan konfigurasi database pada file `.env`:
 
 ``` dotenv
 APP_NAME="My Bengkel App"
@@ -333,13 +340,13 @@ DB_PASSWORD=
 > lokal masing-masing. Jangan menggunakan konfigurasi contoh ini untuk
 > production tanpa penyesuaian.
 
-### 5. Generate application key
+### 5. Generate Application Key
 
 ``` bash
 php artisan key:generate
 ```
 
-### 6. Jalankan migration
+### 6. Jalankan Migration
 
 ``` bash
 php artisan migrate
@@ -349,7 +356,7 @@ php artisan migrate
 > setelah memastikan isi seeder dan akun awal yang dibuat. Jangan
 > mengasumsikan akun demo tertentu tersedia.
 
-### 7. Jalankan aplikasi
+### 7. Jalankan Aplikasi
 
 Buka dua terminal di folder project.
 
@@ -369,7 +376,7 @@ Buka aplikasi melalui:
 
 **http://127.0.0.1:8000**
 
-### 8. Perintah pengembangan yang berguna
+### 8. Perintah Pengembangan
 
 ``` bash
 # Menjalankan test
@@ -385,7 +392,10 @@ php artisan optimize:clear
 npm run build
 ```
 
-## 🗂️ Gambaran Struktur Project
+## 🗂️ Struktur Project
+
+Berikut gambaran direktori utama Laravel. Detail file dapat berkembang
+mengikuti implementasi project.
 
 ``` text
 my-bengkel-app/
@@ -409,9 +419,6 @@ my-bengkel-app/
 └── README.md
 ```
 
-Struktur di atas merupakan gambaran direktori utama Laravel; detail file
-dapat berkembang mengikuti implementasi project.
-
 ## 🔐 Catatan Keamanan
 
 -   File `.env` tidak boleh di-commit ke repository.
@@ -425,26 +432,26 @@ dapat berkembang mengikuti implementasi project.
 -   Untuk deployment, nonaktifkan debug (`APP_DEBUG=false`) dan gunakan
     konfigurasi production yang sesuai.
 
-## 🚧 Status Pengembangan
+## 🚧 Roadmap Pengembangan
 
-  Modul                                        Status
+  Modul                                                Status
   -------------------------------------------- -----------------------
-  Setup Laravel dan database                   ✅ Selesai
-  Login, logout, dan role middleware           ✅ Selesai
-  Dashboard                                    ✅ Selesai
-  Manajemen kategori                           ✅ Selesai
-  Manajemen produk                             ✅ Selesai
-  Pergerakan stok                              ✅ Selesai
-  POS dan checkout                             ✅ Selesai
-  Manajemen karyawan                           ✅ Selesai
-  Riwayat dan detail transaksi                 ✅ Selesai
-  Cetak struk                                  ✅ Selesai
-  Pembatalan transaksi oleh Owner              ✅ Selesai
-  Laporan                                      ✅ Selesai
-  Pengajuan pembatalan oleh Kasir              ✅ Selesai
-  Daftar pengajuan untuk Owner                 ✅ Selesai
-  Persetujuan/penolakan pengajuan oleh Owner   🔄 Dalam pengembangan
-  Pengujian menyeluruh dan deployment          ⏳ Berikutnya
+  Setup Laravel dan database                         ✅ Selesai
+  Login, logout, dan role middleware                 ✅ Selesai
+  Dashboard                                          ✅ Selesai
+  Manajemen kategori                                 ✅ Selesai
+  Manajemen produk                                   ✅ Selesai
+  Pergerakan stok                                    ✅ Selesai
+  POS dan checkout                                   ✅ Selesai
+  Manajemen karyawan                                 ✅ Selesai
+  Riwayat dan detail transaksi                       ✅ Selesai
+  Cetak struk                                        ✅ Selesai
+  Pembatalan transaksi oleh Owner                    ✅ Selesai
+  Laporan                                            ✅ Selesai
+  Pengajuan pembatalan oleh Kasir                    ✅ Selesai
+  Daftar pengajuan untuk Owner                       ✅ Selesai
+  Persetujuan/penolakan pengajuan oleh Owner    🔄 Dalam pengembangan
+  Pengujian menyeluruh dan deployment               ⏳ Berikutnya
 
 ## 🌿 Branch Git
 
@@ -491,7 +498,8 @@ open-source tertentu.
 
 ## 👨‍💻 Pengembang
 
-**My Bengkel App**\
+**My Bengkel App**
+
 Repository:
 [github.com/muhammadnafis23/my-bengkel-app](https://github.com/muhammadnafis23/my-bengkel-app)
 
@@ -500,4 +508,6 @@ Repository:
 ::: {align="center"}
 Dibuat untuk membantu operasional bengkel menjadi lebih teratur,
 efisien, dan mudah dipantau. 🔧
+
+**Thank you for visiting this repository!**
 :::
