@@ -27,5 +27,5 @@ Homestead.yaml
 Thumbs.db
 
 # AI assistant instruction files
-AGENTS.md
-CLAUDE.md
+**/AGENTS.md
+**/CLAUDE.md
