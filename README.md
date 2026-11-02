@@ -1,36 +1,30 @@
-::: {align="center"}
-# 🔧 My Bengkel App
+<div align="center">
 
-### Sistem Manajemen Bengkel Berbasis Web
+<h1>🔧 My Bengkel App</h1>
+<h3>Sistem Manajemen Bengkel Berbasis Web</h3>
 
-Mengelola transaksi, inventaris, pergerakan stok, pengguna, dan laporan
-operasional bengkel dalam satu aplikasi.
+<p>Mengelola transaksi, inventaris, pergerakan stok, pengguna, dan laporan operasional bengkel dalam satu aplikasi.</p>
 
-```{=html}
 <p>
-```
-`<img src="https://img.shields.io/badge/Laravel-13.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel 13">`{=html}
-`<img src="https://img.shields.io/badge/PHP-8.3-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP 8.3">`{=html}
-`<img src="https://img.shields.io/badge/MySQL-Database-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL">`{=html}
-`<img src="https://img.shields.io/badge/Bootstrap-5.3-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" alt="Bootstrap">`{=html}
-```{=html}
+  <img src="https://img.shields.io/badge/Laravel-13.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel 13">
+  <img src="https://img.shields.io/badge/PHP-8.3-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP 8.3">
+  <img src="https://img.shields.io/badge/MySQL-Database-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL">
+  <img src="https://img.shields.io/badge/Bootstrap-5.3-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" alt="Bootstrap">
 </p>
-```
-```{=html}
-<p>
-```
-`<a href="#-fitur-utama">`{=html}Fitur`</a>`{=html} •
-`<a href="#-teknologi">`{=html}Teknologi`</a>`{=html} •
-`<a href="#-alur-sistem">`{=html}Alur Sistem`</a>`{=html} •
-`<a href="#-instalasi">`{=html}Instalasi`</a>`{=html} •
-`<a href="#-roadmap-pengembangan">`{=html}Roadmap`</a>`{=html}
-```{=html}
-</p>
-```
-[📦 Lihat Repository](https://github.com/muhammadnafis23/my-bengkel-app)
-:::
 
-------------------------------------------------------------------------
+<p>
+  <a href="#-fitur-utama">Fitur</a> •
+  <a href="#-teknologi">Teknologi</a> •
+  <a href="#-alur-sistem">Alur Sistem</a> •
+  <a href="#-instalasi">Instalasi</a> •
+  <a href="#-roadmap-pengembangan">Roadmap</a>
+</p>
+
+<p><a href="https://github.com/muhammadnafis23/my-bengkel-app">📦 Lihat Repository</a></p>
+
+</div>
+
+---
 
 ## 📌 Tentang Project
 
@@ -51,16 +45,11 @@ mengakses fitur sesuai tanggung jawabnya.
 
 ## ✨ Fitur Utama
 
-```{=html}
 <details open>
-```
-```{=html}
 <summary>
-```
-`<strong>`{=html}📊 Dashboard & Ringkasan`</strong>`{=html}
-```{=html}
+<strong>📊 Dashboard & Ringkasan</strong>
 </summary>
-```
+
 -   Ringkasan penjualan dan jumlah transaksi hari ini.
 -   Jumlah produk dan indikator stok menipis.
 -   Grafik penjualan berdasarkan periode.
@@ -68,19 +57,13 @@ mengakses fitur sesuai tanggung jawabnya.
 -   Aktivitas pergerakan stok terbaru.
 -   Transaksi yang dibatalkan tidak dihitung sebagai penjualan selesai.
 
-```{=html}
+
 </details>
-```
-```{=html}
 <details open>
-```
-```{=html}
 <summary>
-```
-`<strong>`{=html}🛒 Point of Sale (POS) & Transaksi`</strong>`{=html}
-```{=html}
+<strong>🛒 Point of Sale (POS) & Transaksi</strong>
 </summary>
-```
+
 -   Pencarian produk berdasarkan nama atau SKU.
 -   Keranjang belanja dengan pengaturan kuantitas.
 -   Perhitungan subtotal dan total otomatis.
@@ -90,19 +73,13 @@ mengakses fitur sesuai tanggung jawabnya.
 -   Detail transaksi dan cetak struk.
 -   Snapshot nama produk, SKU, dan harga pada detail transaksi.
 
-```{=html}
+
 </details>
-```
-```{=html}
 <details>
-```
-```{=html}
 <summary>
-```
-`<strong>`{=html}📦 Produk & Kategori`</strong>`{=html}
-```{=html}
+<strong>📦 Produk & Kategori</strong>
 </summary>
-```
+
 -   Tambah, lihat, ubah, dan hapus data produk.
 -   Pengelolaan kategori produk.
 -   Informasi SKU, satuan, harga modal, harga jual, stok, dan batas
@@ -111,19 +88,13 @@ mengakses fitur sesuai tanggung jawabnya.
 -   Perubahan stok dilakukan melalui pencatatan pergerakan stok, bukan
     dengan mengubah stok langsung dari formulir produk.
 
-```{=html}
+
 </details>
-```
-```{=html}
 <details>
-```
-```{=html}
 <summary>
-```
-`<strong>`{=html}🔄 Pergerakan Stok`</strong>`{=html}
-```{=html}
+<strong>🔄 Pergerakan Stok</strong>
 </summary>
-```
+
 -   Pencatatan stok masuk.
 -   Pencatatan stok keluar.
 -   Pencatatan penyesuaian stok.
@@ -131,38 +102,26 @@ mengakses fitur sesuai tanggung jawabnya.
 -   Pencatatan pengguna, waktu, referensi transaksi, dan alasan.
 -   Validasi agar stok tidak menjadi negatif.
 
-```{=html}
+
 </details>
-```
-```{=html}
 <details>
-```
-```{=html}
 <summary>
-```
-`<strong>`{=html}👥 Manajemen Karyawan & Hak Akses`</strong>`{=html}
-```{=html}
+<strong>👥 Manajemen Karyawan & Hak Akses</strong>
 </summary>
-```
+
 -   Pengelolaan akun Kasir dan Gudang.
 -   Pengaturan peran pengguna.
 -   Aktivasi dan deaktivasi akun.
 -   Password disimpan menggunakan mekanisme hashing Laravel.
 -   Pembatasan akses halaman berdasarkan role di backend.
 
-```{=html}
+
 </details>
-```
-```{=html}
 <details>
-```
-```{=html}
 <summary>
-```
-`<strong>`{=html}🧾 Pembatalan Transaksi`</strong>`{=html}
-```{=html}
+<strong>🧾 Pembatalan Transaksi</strong>
 </summary>
-```
+
 -   Owner dapat membatalkan transaksi yang selesai.
 -   Alasan pembatalan dicatat.
 -   Stok produk dikembalikan ketika pembatalan berhasil.
@@ -176,75 +135,47 @@ berstatus selesai sampai diproses oleh Owner. Halaman daftar pengajuan
 untuk Owner sudah tersedia, sedangkan proses persetujuan dan penolakan
 masih dalam pengembangan.
 
-```{=html}
+
 </details>
-```
-```{=html}
 <details>
-```
-```{=html}
 <summary>
-```
-`<strong>`{=html}📈 Laporan`</strong>`{=html}
-```{=html}
+<strong>📈 Laporan</strong>
 </summary>
-```
+
 -   Filter laporan berdasarkan rentang tanggal.
 -   Ringkasan penjualan dan transaksi selesai.
 -   Jumlah produk terjual.
 -   Produk terlaris.
 -   Daftar transaksi sesuai periode laporan.
 
-```{=html}
+
 </details>
-```
 ## 🧑‍💼 Struktur Peran
 
-  -----------------------------------------------------------------------
-  Peran                               Tanggung Jawab
-  ----------------------------------- -----------------------------------
-  **Owner**                           Mengakses dashboard, data produk
-                                      dan kategori, akun karyawan,
-                                      laporan, serta pengelolaan
-                                      pembatalan transaksi.
-
-  **Kasir**                           Melayani transaksi melalui POS,
-                                      melihat riwayat dan detail
-                                      transaksi, serta mengajukan
-                                      pembatalan transaksi.
-
-  **Gudang**                          Mengelola pencatatan stok masuk,
-                                      stok keluar, penyesuaian, dan
-                                      melihat riwayat pergerakan stok.
-  -----------------------------------------------------------------------
+| Peran | Tanggung Jawab |
+|:---|:---|
+| **Owner** | Mengakses dashboard, data produk dan kategori, akun karyawan, laporan, serta pengelolaan pembatalan transaksi. |
+| **Kasir** | Melayani transaksi melalui POS, melihat riwayat dan detail transaksi, serta mengajukan pembatalan transaksi. |
+| **Gudang** | Mengelola pencatatan stok masuk, stok keluar, penyesuaian, dan melihat riwayat pergerakan stok. |
 
 ## 🧰 Teknologi
 
-  -----------------------------------------------------------------------------
-  Teknologi                                 Kegunaan
-  ----------------------------------------- -----------------------------------
-  [Laravel 13](https://laravel.com/)        Backend framework dan pola MVC
-
-  [PHP 8.3](https://www.php.net/)           Bahasa pemrograman backend
-
-  [MySQL](https://www.mysql.com/)           Database relasional
-
-  [Blade](https://laravel.com/docs/blade)   Template view
-
-  [Bootstrap                                Styling dan komponen antarmuka
-  5.3](https://getbootstrap.com/)           
-
-  [Alpine.js](https://alpinejs.dev/)        Interaksi antarmuka
-
-  [Chart.js](https://www.chartjs.org/)      Visualisasi grafik dashboard
-  -----------------------------------------------------------------------------
+| Teknologi | Kegunaan |
+|:---|:---|
+| [Laravel 13](https://laravel.com/) | Backend framework dan pola MVC |
+| [PHP 8.3](https://www.php.net/) | Bahasa pemrograman backend |
+| [MySQL](https://www.mysql.com/) | Database relasional |
+| [Blade](https://laravel.com/docs/blade) | Template view |
+| [Bootstrap 5.3](https://getbootstrap.com/) | Styling dan komponen antarmuka |
+| [Alpine.js](https://alpinejs.dev/) | Interaksi antarmuka |
+| [Chart.js](https://www.chartjs.org/) | Visualisasi grafik dashboard |
 
 ## 🗺️ Alur Sistem
 
 Diagram berikut menggambarkan alur utama aplikasi berdasarkan peran
 pengguna dan proses transaksi.
 
-``` mermaid
+```mermaid
 flowchart TD
     A([Login]) --> B{Validasi Role}
 
@@ -434,24 +365,24 @@ my-bengkel-app/
 
 ## 🚧 Roadmap Pengembangan
 
-  Modul                                                Status
-  -------------------------------------------- -----------------------
-  Setup Laravel dan database                         ✅ Selesai
-  Login, logout, dan role middleware                 ✅ Selesai
-  Dashboard                                          ✅ Selesai
-  Manajemen kategori                                 ✅ Selesai
-  Manajemen produk                                   ✅ Selesai
-  Pergerakan stok                                    ✅ Selesai
-  POS dan checkout                                   ✅ Selesai
-  Manajemen karyawan                                 ✅ Selesai
-  Riwayat dan detail transaksi                       ✅ Selesai
-  Cetak struk                                        ✅ Selesai
-  Pembatalan transaksi oleh Owner                    ✅ Selesai
-  Laporan                                            ✅ Selesai
-  Pengajuan pembatalan oleh Kasir                    ✅ Selesai
-  Daftar pengajuan untuk Owner                       ✅ Selesai
-  Persetujuan/penolakan pengajuan oleh Owner    🔄 Dalam pengembangan
-  Pengujian menyeluruh dan deployment               ⏳ Berikutnya
+| Modul | Status |
+|:---|:---:|
+| Setup Laravel dan database | ✅ Selesai |
+| Login, logout, dan role middleware | ✅ Selesai |
+| Dashboard | ✅ Selesai |
+| Manajemen kategori | ✅ Selesai |
+| Manajemen produk | ✅ Selesai |
+| Pergerakan stok | ✅ Selesai |
+| POS dan checkout | ✅ Selesai |
+| Manajemen karyawan | ✅ Selesai |
+| Riwayat dan detail transaksi | ✅ Selesai |
+| Cetak struk | ✅ Selesai |
+| Pembatalan transaksi oleh Owner | ✅ Selesai |
+| Laporan | ✅ Selesai |
+| Pengajuan pembatalan oleh Kasir | ✅ Selesai |
+| Daftar pengajuan untuk Owner | ✅ Selesai |
+| Persetujuan/penolakan pengajuan oleh Owner | 🔄 Dalam pengembangan |
+| Pengujian menyeluruh dan deployment | ⏳ Berikutnya |
 
 ## 🌿 Branch Git
 
@@ -503,11 +434,11 @@ open-source tertentu.
 Repository:
 [github.com/muhammadnafis23/my-bengkel-app](https://github.com/muhammadnafis23/my-bengkel-app)
 
-------------------------------------------------------------------------
+---
 
-::: {align="center"}
+<div align="center">
 Dibuat untuk membantu operasional bengkel menjadi lebih teratur,
 efisien, dan mudah dipantau. 🔧
 
 **Thank you for visiting this repository!**
-:::
+</div>
