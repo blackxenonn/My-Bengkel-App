@@ -214,4 +214,4 @@ class TransactionController extends Controller
             ->route('transactions.show', $transaction)
             ->with('success', 'Transaksi berhasil dibatalkan dan stok telah dikembalikan.');
     }
-}
+}   

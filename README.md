@@ -16,7 +16,7 @@
   <a href="#-fitur-utama">Fitur</a> •
   <a href="#-teknologi">Teknologi</a> •
   <a href="#-alur-sistem">Alur Sistem</a> •
-  <a href="#-instalasi">Instalasi</a> •
+  <a href="#-instalasi">Instalasi</a> • 
   <a href="#-roadmap-pengembangan">Roadmap</a>
 </p>
 
