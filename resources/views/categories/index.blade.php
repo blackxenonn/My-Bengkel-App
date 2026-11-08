@@ -5,10 +5,13 @@
 
 @section('content')
 
-{{-- Tombol Tambah Kategori --}}
-<div class="d-flex justify-content-end mb-4">
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+    <p class="text-muted mb-0">
+        Kelola kategori untuk mengelompokkan produk agar lebih terorganisir.
+    </p>
+
     <a href="{{ route('categories.create') }}" class="btn btn-primary">
-        + Tambah Kategori
+        <i class="bi bi-plus-lg"></i> Tambah Kategori
     </a>
 </div>
 
@@ -28,6 +31,34 @@
 {{-- Tabel Kategori --}}
 <div class="card border-0 shadow-sm">
     <div class="card-body">
+
+        {{-- FORM PENCARIAN --}}
+        <form action="{{ route('categories.index') }}"
+            method="GET"
+            data-live-search
+            class="mb-3">
+
+            <div class="input-group">
+                <input
+                    type="text"
+                    name="search"
+                    class="form-control"
+                    placeholder="Cari nama atau deskripsi kategori..."
+                    value="{{ $search }}"
+                    data-live-search-input
+                    autocomplete="off"
+                >
+
+                <button type="submit" class="btn btn-primary">
+                    Cari
+                </button>
+
+                <a href="{{ route('categories.index') }}"
+                class="btn btn-secondary">
+                    Reset
+                </a>
+            </div>
+        </form>
 
         <div class="table-responsive">
             <table class="table table-hover align-middle">

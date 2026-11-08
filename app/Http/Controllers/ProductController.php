@@ -11,13 +11,40 @@ use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $products = Product::with('category')
-            ->latest()
-            ->paginate(10);
+        // Mengambil kata kunci pencarian.
+        $validated = $request->validate([
+            'search' => ['nullable', 'string', 'max:100'],
+        ]);
 
-        return view('products.index', compact('products'));
+        $search = trim($validated['search'] ?? '');
+
+        // Query produk beserta kategori.
+        $products = Product::with('category')
+            ->when($search !== '', function ($query) use ($search) {
+
+                $query->where(function ($query) use ($search) {
+
+                    // Pencarian berdasarkan SKU.
+                    $query->where('sku', 'like', "%{$search}%")
+
+                        // Pencarian berdasarkan nama produk.
+                        ->orWhere('name', 'like', "%{$search}%")
+
+                        // Pencarian berdasarkan nama kategori.
+                        ->orWhereHas('category', function ($categoryQuery) use ($search) {
+                            $categoryQuery->where('name', 'like', "%{$search}%");
+                        });
+
+                });
+
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('products.index', compact('products', 'search'));
     }
 
     public function create(): View

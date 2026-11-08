@@ -11,16 +11,29 @@ use Illuminate\Http\RedirectResponse;
 
 class EmployeeController extends Controller
 {
-    public function index(): View
-    {
+    public function index(Request $request): View
+{
+        $search = trim($request->input('search', ''));
+
         $employees = User::with('role')
             ->whereHas('role', function ($query) {
                 $query->whereIn('name', ['kasir', 'gudang']);
             })
+            ->when($search !== '', function ($query) use ($search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%")
+                        ->orWhere('username', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%")
+                        ->orWhereHas('role', function ($roleQuery) use ($search) {
+                            $roleQuery->where('name', 'like', "%{$search}%");
+                        });
+                });
+            })
             ->latest()
-            ->paginate(10);
+            ->paginate(10)
+            ->withQueryString();
 
-        return view('employees.index', compact('employees'));
+        return view('employees.index', compact('employees', 'search'));
     }
 
     public function create(): View

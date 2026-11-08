@@ -12,31 +12,60 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
-
 class TransactionController extends Controller
 {
     public function index(Request $request): View
     {
+        $search = trim($request->input('search', ''));
+        $date = $request->input('date');
+
         $query = Transaction::with('user')
+            ->when($search !== '', function ($query) use ($search) {
+                $query->where(function ($query) use ($search) {
+
+                    // Cari berdasarkan nomor invoice.
+                    $query->where('invoice_number', 'like', "%{$search}%")
+
+                        // Cari berdasarkan nama kasir.
+                        ->orWhereHas('user', function ($userQuery) use ($search) {
+                            $userQuery->where('name', 'like', "%{$search}%");
+                        })
+
+                        // Cari berdasarkan status transaksi.
+                        ->orWhere('status', 'like', "%{$search}%");
+
+                    // Padanan status dalam bahasa Indonesia.
+                    $statusKeywords = [
+                        'selesai' => 'completed',
+                        'dibatalkan' => 'cancelled',
+                        'batal' => 'cancelled',
+                    ];
+
+                    foreach ($statusKeywords as $keyword => $status) {
+                        if (
+                            stripos($keyword, $search) !== false ||
+                            stripos($search, $keyword) !== false
+                        ) {
+                            $query->orWhere('status', $status);
+                        }
+                    }
+                });
+            })
+            // Filter berdasarkan tanggal transaksi.
+            ->when($date, function ($query) use ($date) {
+                $query->whereDate('created_at', $date);
+            })
             ->latest();
 
-        // Pencarian berdasarkan nomor invoice
-        if ($request->filled('search')) {
-            $query->where(
-                'invoice_number',
-                'like',
-                '%' . $request->search . '%'
-            );
-        }
+        $transactions = $query
+            ->paginate(10)
+            ->withQueryString();
 
-        // Filter berdasarkan tanggal transaksi
-        if ($request->filled('date')) {
-            $query->whereDate('created_at', $request->date);
-        }
-
-        $transactions = $query->paginate(10)->withQueryString();
-
-        return view('transactions.index', compact('transactions'));
+        return view('transactions.index', compact(
+            'transactions',
+            'search',
+            'date'
+        ));
     }
 
     public function show(Transaction $transaction): View
@@ -66,12 +95,10 @@ class TransactionController extends Controller
         ));
     }
 
-    
     public function requestCancellation(
-            Request $request,
-            Transaction $transaction
+        Request $request,
+        Transaction $transaction
     ): RedirectResponse {
-
         $validated = $request->validate([
             'reason' => ['required', 'string', 'min:5', 'max:1000'],
         ], [
@@ -81,19 +108,19 @@ class TransactionController extends Controller
 
         DB::transaction(function () use ($transaction, $validated) {
 
-            // Kunci transaksi agar tidak terjadi pengajuan bersamaan
+            // Kunci transaksi agar tidak terjadi pengajuan bersamaan.
             $lockedTransaction = Transaction::whereKey($transaction->id)
                 ->lockForUpdate()
                 ->firstOrFail();
 
-            // Pastikan transaksi masih selesai
+            // Pastikan transaksi masih selesai.
             if ($lockedTransaction->status !== 'completed') {
                 throw ValidationException::withMessages([
                     'transaction' => 'Transaksi ini tidak dapat diajukan pembatalannya.',
                 ]);
             }
 
-            // Cegah pengajuan ganda yang masih menunggu
+            // Cegah pengajuan ganda yang masih menunggu.
             $existingRequest = CancellationRequest::where(
                 'transaction_id',
                 $lockedTransaction->id
@@ -107,7 +134,7 @@ class TransactionController extends Controller
                 ]);
             }
 
-            // Simpan pengajuan pembatalan
+            // Simpan pengajuan pembatalan.
             CancellationRequest::create([
                 'transaction_id' => $lockedTransaction->id,
                 'requested_by' => auth()->id(),
@@ -124,9 +151,10 @@ class TransactionController extends Controller
             );
     }
 
-
-    public function cancel(Request $request, Transaction $transaction): RedirectResponse
-    {
+    public function cancel(
+        Request $request,
+        Transaction $transaction
+    ): RedirectResponse {
         $validated = $request->validate([
             'cancellation_reason' => [
                 'required',
@@ -141,12 +169,12 @@ class TransactionController extends Controller
 
         DB::transaction(function () use ($transaction, $validated) {
 
-            // Kunci transaksi agar tidak dibatalkan secara bersamaan
+            // Kunci transaksi agar tidak dibatalkan secara bersamaan.
             $transaction = Transaction::whereKey($transaction->id)
                 ->lockForUpdate()
                 ->firstOrFail();
 
-            // Pastikan transaksi belum pernah dibatalkan
+            // Pastikan transaksi belum pernah dibatalkan.
             if ($transaction->status !== 'completed') {
                 throw ValidationException::withMessages([
                     'transaction' => 'Transaksi ini sudah dibatalkan atau tidak dapat dibatalkan.',
@@ -155,7 +183,7 @@ class TransactionController extends Controller
 
             $details = $transaction->details;
 
-            // Kunci semua produk berdasarkan urutan ID
+            // Kunci semua produk berdasarkan urutan ID.
             $products = Product::whereIn(
                 'id',
                 $details->pluck('product_id')->unique()
@@ -165,9 +193,8 @@ class TransactionController extends Controller
                 ->get()
                 ->keyBy('id');
 
-            // Kembalikan stok setiap produk
+            // Kembalikan stok setiap produk.
             foreach ($details as $detail) {
-
                 $product = $products->get($detail->product_id);
 
                 if (!$product) {
@@ -185,7 +212,7 @@ class TransactionController extends Controller
                     'stock' => $stockAfter,
                 ]);
 
-                // Catat pengembalian stok
+                // Catat pengembalian stok.
                 StockMovement::create([
                     'product_id' => $product->id,
                     'user_id' => auth()->id(),
@@ -201,7 +228,7 @@ class TransactionController extends Controller
                 ]);
             }
 
-            // Simpan informasi pembatalan
+            // Simpan informasi pembatalan.
             $transaction->status = 'cancelled';
             $transaction->cancelled_at = now();
             $transaction->cancelled_by = auth()->id();
@@ -214,4 +241,4 @@ class TransactionController extends Controller
             ->route('transactions.show', $transaction)
             ->with('success', 'Transaksi berhasil dibatalkan dan stok telah dikembalikan.');
     }
-}   
+}

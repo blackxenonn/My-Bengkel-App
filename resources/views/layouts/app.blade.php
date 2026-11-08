@@ -6,14 +6,23 @@
 
     <title>@yield('title', 'My Bengkel App')</title>
 
-    {{-- Baca status sidebar sebelum halaman ditampilkan --}}
+    {{-- Memuat status sidebar dan tema sebelum halaman ditampilkan --}}
     <script>
+        const rootElement = document.documentElement;
+
         try {
             if (localStorage.getItem('bengkelSidebarCollapsed') === 'true') {
-                document.documentElement.classList.add('sidebar-collapsed');
+                rootElement.classList.add('sidebar-collapsed');
             }
+
+            const savedTheme = localStorage.getItem('bengkelTheme');
+
+            rootElement.setAttribute(
+                'data-bs-theme',
+                savedTheme === 'dark' ? 'dark' : 'light'
+            );
         } catch (error) {
-            // Jika localStorage tidak tersedia, gunakan sidebar normal.
+            rootElement.setAttribute('data-bs-theme', 'light');
         }
     </script>
 
@@ -50,15 +59,49 @@
             overflow-x: hidden;
 
             transition:
-                width 0.25s ease,
-                flex-basis 0.25s ease,
-                padding 0.25s ease;
+                width 0.3s ease,
+                max-width 0.3s ease,
+                flex-basis 0.3s ease,
+                padding 0.3s ease;
         }
 
         .main-content {
             flex: 1 1 0;
             max-width: none;
             min-width: 0;
+            margin-left: 16.666667%;
+            width: 83.333333%;
+
+            transition:
+                margin-left 0.3s ease,
+                width 0.3s ease,
+                flex-basis 0.3s ease;
+        }
+
+        /* ========================================
+           SIDEBAR FIXED / TIDAK IKUT SCROLL
+        ======================================== */
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            z-index: 1030;
+        }
+
+        html.sidebar-collapsed .main-content {
+            margin-left: 56px;
+            width: calc(100% - 56px);
+        }
+
+        html.sidebar-collapsed .sidebar {
+            flex: 0 0 56px;
+            width: 56px;
+            max-width: 56px;
+            height: 100vh;
         }
 
         /* ========================================
@@ -70,7 +113,7 @@
             align-items: center;
             justify-content: space-between;
             gap: 8px;
-            padding: 8px 4px 18px;
+            padding: 0px 4px 0px;
         }
 
         .sidebar-brand {
@@ -155,13 +198,9 @@
 
         /* ========================================
            SIDEBAR MINIMIZE
-           Class berada di elemen HTML.
         ======================================== */
 
         html.sidebar-collapsed .sidebar {
-            flex: 0 0 56px;
-            width: 56px;
-            max-width: 56px;
             padding: 8px 3px !important;
         }
 
@@ -228,13 +267,13 @@
 
         .top-navbar {
             width: 100%;
-            min-height: 40px;
+            min-height: 48px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             background: transparent;
             border: none;
-            border-bottom: 1px solid #e5e7eb;
+            border-bottom: 1px solid var(--app-border);
             border-radius: 0;
             box-shadow: none;
             padding: 0 4px 5px;
@@ -242,9 +281,16 @@
         }
 
         .navbar-brand-text {
-            font-size: 17px;
-            font-weight: 600;
-            color: #172033;
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--app-text);
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 14px;
         }
 
         .navbar-user {
@@ -254,8 +300,8 @@
         }
 
         .navbar-avatar {
-            width: 30px;
-            height: 30px;
+            width: 36px;
+            height: 36px;
             flex-shrink: 0;
             border-radius: 50%;
             background: #e8eeff;
@@ -264,7 +310,7 @@
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 14px;
         }
 
         .navbar-user-info {
@@ -276,23 +322,40 @@
             font-size: 14px;
             font-weight: 600;
             line-height: 1.1;
-            color: #172033;
+            color: var(--app-text);
         }
 
         .navbar-user-info small {
             display: block;
-            color: #6b7280;
+            color: var(--app-muted);
             font-size: 12px;
             line-height: 1;
             margin-top: 3px;
         }
 
         /* ========================================
-           JUDUL HALAMAN
+           THEME TOGGLE
         ======================================== */
 
-        .page-heading {
-            margin-bottom: 20px;
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            border: 1px solid var(--app-border);
+            border-radius: 50%;
+            background: var(--app-surface);
+            color: var(--app-text);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--app-background);
+            transform: rotate(15deg);
         }
 
         /* ========================================
@@ -305,21 +368,48 @@
             }
 
             .sidebar {
+                position: relative;
                 flex: 0 0 100%;
                 width: 100%;
                 max-width: 100%;
                 min-height: auto;
+                height: auto;
             }
 
-            .main-content {
+            .main-content,
+            html.sidebar-collapsed .main-content {
                 flex: 0 0 100%;
                 max-width: 100%;
+                margin-left: 0;
+                width: 100%;
             }
 
             html.sidebar-collapsed .sidebar {
                 flex: 0 0 100%;
                 width: 100%;
                 max-width: 100%;
+                height: auto;
+            }
+
+            .navbar-brand-text {
+                font-size: 15px;
+            }
+
+            .navbar-user-info strong {
+                font-size: 12px;
+            }
+
+            .navbar-user-info small {
+                font-size: 11px;
+            }
+
+            .navbar-right {
+                gap: 8px;
+            }
+
+            .theme-toggle {
+                width: 36px;
+                height: 36px;
             }
         }
     </style>
@@ -354,11 +444,6 @@
                     <i class="bi bi-layout-sidebar-inset"></i>
                 </button>
 
-            </div>
-
-            {{-- ROLE PENGGUNA --}}
-            <div class="sidebar-role text-white-50 small px-2 mb-3">
-                Role: {{ Auth::user()->role->name ?? '-' }}
             </div>
 
             {{-- =================================
@@ -412,12 +497,14 @@
                 <div class="sidebar-section">KASIR</div>
 
                 @if(Auth::user()->role?->name === 'kasir')
+
                     <a href="{{ route('dashboard') }}"
                        class="nav-link sidebar-menu {{ request()->routeIs('dashboard') ? 'active' : '' }}"
                        title="Dashboard">
                         <i class="bi bi-speedometer2"></i>
                         <span class="menu-label">Dashboard</span>
                     </a>
+
                 @endif
 
                 <a href="{{ route('pos') }}"
@@ -528,37 +615,42 @@
             {{-- NAVBAR ATAS --}}
             <nav class="top-navbar">
 
+                {{-- JUDUL HALAMAN DINAMIS --}}
                 <div class="navbar-brand-text">
-                    My Bengkel App
+                    @yield('page-title', 'Dashboard')
                 </div>
 
-                <div class="navbar-user">
+                {{-- PROFIL DAN TOMBOL TEMA --}}
+                <div class="navbar-right">
 
-                    <div class="navbar-avatar">
-                        {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-                    </div>
+                    {{-- TOMBOL DARK MODE / LIGHT MODE --}}
+                    <button
+                        type="button"
+                        class="theme-toggle"
+                        id="themeToggle"
+                        title="Ganti tema"
+                        aria-label="Ganti tema"
+                    >
+                        <i class="bi bi-moon-stars-fill" id="themeIcon"></i>
+                    </button>
 
-                    <div class="navbar-user-info">
-                        <strong>{{ Auth::user()->name }}</strong>
-                        <small>{{ ucfirst(Auth::user()->role->name ?? '-') }}</small>
+                    {{-- PROFIL PENGGUNA --}}
+                    <div class="navbar-user">
+
+                        <div class="navbar-avatar">
+                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                        </div>
+
+                        <div class="navbar-user-info">
+                            <strong>{{ Auth::user()->name }}</strong>
+                            <small>{{ ucfirst(Auth::user()->role->name ?? '-') }}</small>
+                        </div>
+
                     </div>
 
                 </div>
 
             </nav>
-
-            {{-- JUDUL HALAMAN --}}
-            <div class="page-heading">
-
-                <h4 class="mb-1">
-                    @yield('page-title', 'Dashboard')
-                </h4>
-
-                <small class="text-muted">
-                    My Bengkel App
-                </small>
-
-            </div>
 
             {{-- KONTEN HALAMAN --}}
             @yield('content')
@@ -614,10 +706,8 @@
             }
         }
 
-        // Sinkronkan ikon dengan status awal.
         updateToggleButton();
 
-        // Hanya tombol ini yang boleh mengubah status sidebar.
         sidebarToggle.addEventListener('click', function () {
 
             root.classList.toggle('sidebar-collapsed');
@@ -630,10 +720,118 @@
                     String(isCollapsed)
                 );
             } catch (error) {
-                // Tampilan tetap dapat berubah meskipun penyimpanan gagal.
+                // Tampilan tetap berubah meskipun penyimpanan gagal.
             }
 
             updateToggleButton();
+
+        });
+
+    });
+</script>
+
+{{-- =====================================
+     DARK MODE / LIGHT MODE
+====================================== --}}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const root = document.documentElement;
+
+        if (!themeToggle || !themeIcon) {
+            return;
+        }
+
+        function updateThemeButton() {
+
+            const currentTheme = root.getAttribute('data-bs-theme');
+
+            if (currentTheme === 'dark') {
+
+                themeIcon.className = 'bi bi-sun-fill';
+                themeToggle.title = 'Ganti ke Light Mode';
+
+                themeToggle.setAttribute(
+                    'aria-label',
+                    'Ganti ke Light Mode'
+                );
+
+            } else {
+
+                themeIcon.className = 'bi bi-moon-stars-fill';
+                themeToggle.title = 'Ganti ke Dark Mode';
+
+                themeToggle.setAttribute(
+                    'aria-label',
+                    'Ganti ke Dark Mode'
+                );
+
+            }
+        }
+
+        updateThemeButton();
+
+        themeToggle.addEventListener('click', function () {
+
+            const currentTheme = root.getAttribute('data-bs-theme');
+
+            const newTheme = currentTheme === 'dark'
+                ? 'light'
+                : 'dark';
+
+            root.setAttribute('data-bs-theme', newTheme);
+
+            try {
+                localStorage.setItem('bengkelTheme', newTheme);
+            } catch (error) {
+                // Tema tetap berubah meskipun penyimpanan gagal.
+            }
+
+            updateThemeButton();
+
+        });
+
+    });
+</script>
+
+{{-- =====================================
+     LIVE SEARCH
+====================================== --}}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        document.querySelectorAll('[data-live-search]').forEach(function (form) {
+
+            const input = form.querySelector('[data-live-search-input]');
+
+            if (!input) {
+                return;
+            }
+
+            let timeout = null;
+
+            input.addEventListener('input', function () {
+
+                clearTimeout(timeout);
+
+                timeout = setTimeout(function () {
+                    form.requestSubmit();
+                }, 400);
+
+            });
+
+            // Kembalikan fokus ke kolom pencarian setelah halaman dimuat.
+            if (input.value.trim() !== '') {
+                input.focus();
+                input.setSelectionRange(
+                    input.value.length,
+                    input.value.length
+                );
+            }
 
         });
 

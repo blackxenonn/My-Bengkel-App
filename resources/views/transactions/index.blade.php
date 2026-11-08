@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 @section('page-title', 'Riwayat Transaksi')
@@ -7,15 +8,23 @@
 <div class="card border-0 shadow-sm">
     <div class="card-body">
 
-        <form method="GET" action="{{ route('transactions.index') }}" class="row g-2 mb-4">
+        {{-- Form pencarian dan filter tanggal --}}
+        <form
+            method="GET"
+            action="{{ route('transactions.index') }}"
+            class="row g-2 mb-3"
+            data-live-search
+        >
 
             <div class="col-md-5">
                 <input
-                    type="text"
+                    type="search"
                     name="search"
                     class="form-control"
-                    placeholder="Cari nomor invoice..."
-                    value="{{ request('search') }}"
+                    placeholder="Cari nomor invoice, nama kasir, atau status..."
+                    value="{{ $search }}"
+                    data-live-search-input
+                    autocomplete="off"
                 >
             </div>
 
@@ -24,22 +33,42 @@
                     type="date"
                     name="date"
                     class="form-control"
-                    value="{{ request('date') }}"
+                    value="{{ $date }}"
                 >
             </div>
 
             <div class="col-md-3 d-flex gap-2">
                 <button type="submit" class="btn btn-primary">
-                    Cari
+                    <i class="bi bi-search"></i> Cari
                 </button>
 
-                <a href="{{ route('transactions.index') }}" class="btn btn-outline-secondary">
+                <a
+                    href="{{ route('transactions.index') }}"
+                    class="btn btn-outline-secondary"
+                >
                     Reset
                 </a>
             </div>
 
         </form>
 
+        {{-- Jumlah hasil pencarian --}}
+        @if ($search !== '' || $date)
+            <p class="text-muted small mb-3">
+                Menampilkan {{ $transactions->total() }} transaksi
+
+                @if ($search !== '')
+                    untuk pencarian "{{ $search }}"
+                @endif
+
+                @if ($date)
+                    pada tanggal {{ \Carbon\Carbon::parse($date)->format('d/m/Y') }}
+                @endif
+                .
+            </p>
+        @endif
+
+        {{-- Tabel transaksi --}}
         <div class="table-responsive">
             <table class="table table-hover align-middle">
 
@@ -58,7 +87,9 @@
                 <tbody>
                     @forelse ($transactions as $transaction)
                         <tr>
-                            <td>{{ $transactions->firstItem() + $loop->index }}</td>
+                            <td>
+                                {{ $transactions->firstItem() + $loop->index }}
+                            </td>
 
                             <td>
                                 <strong>{{ $transaction->invoice_number }}</strong>
@@ -69,7 +100,7 @@
                             </td>
 
                             <td>
-                                {{ $transaction->user->name ?? '-' }}
+                                {{ $transaction->user?->name ?? '-' }}
                             </td>
 
                             <td>
@@ -78,7 +109,13 @@
 
                             <td>
                                 @if ($transaction->status === 'completed')
-                                    <span class="badge bg-success">Selesai</span>
+                                    <span class="badge bg-success">
+                                        Selesai
+                                    </span>
+                                @elseif ($transaction->status === 'cancelled')
+                                    <span class="badge bg-danger">
+                                        Dibatalkan
+                                    </span>
                                 @else
                                     <span class="badge bg-secondary">
                                         {{ ucfirst($transaction->status) }}
@@ -98,7 +135,11 @@
                     @empty
                         <tr>
                             <td colspan="7" class="text-center text-muted py-4">
-                                Belum ada transaksi.
+                                @if ($search !== '' || $date)
+                                    Tidak ada transaksi yang sesuai dengan pencarian atau filter.
+                                @else
+                                    Belum ada transaksi.
+                                @endif
                             </td>
                         </tr>
                     @endforelse
@@ -107,6 +148,7 @@
             </table>
         </div>
 
+        {{-- Pagination --}}
         <div class="mt-3">
             {{ $transactions->links() }}
         </div>

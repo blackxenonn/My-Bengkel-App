@@ -9,11 +9,21 @@ use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $categories = Category::latest()->paginate(10);
+        $search = trim($request->input('search', ''));
 
-        return view('categories.index', compact('categories'));
+        $categories = Category::when($search !== '', function ($query) use ($search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            });
+        })
+        ->latest()
+        ->paginate(10)
+        ->withQueryString();
+
+        return view('categories.index', compact('categories', 'search'));
     }
 
     public function create(): View
