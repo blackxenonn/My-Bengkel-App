@@ -1,264 +1,181 @@
-<div align="center">
+# Bengkel Management
 
-<h1>🔧 My Bengkel App</h1>
-<h3>Sistem Manajemen Bengkel Berbasis Web</h3>
+Aplikasi manajemen bengkel berbasis web yang dikembangkan menggunakan Laravel dan MySQL. Aplikasi ini dirancang untuk membantu pengelolaan operasional bengkel, mulai dari manajemen produk, persediaan barang, transaksi penjualan, hingga laporan.
 
-<p>Mengelola transaksi, inventaris, pergerakan stok, pengguna, dan laporan operasional bengkel dalam satu aplikasi.</p>
+## Tentang Proyek
 
-<p>
-  <img src="https://img.shields.io/badge/Laravel-13.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel 13">
-  <img src="https://img.shields.io/badge/PHP-8.3-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP 8.3">
-  <img src="https://img.shields.io/badge/MySQL-Database-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL">
-  <img src="https://img.shields.io/badge/Bootstrap-5.3-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" alt="Bootstrap">
-</p>
+**Bengkel Management** merupakan sistem informasi berbasis web yang dibuat untuk mempermudah pengelolaan aktivitas operasional bengkel dalam satu aplikasi terintegrasi.
 
-<p>
-  <a href="#-fitur-utama">Fitur</a> •
-  <a href="#-teknologi">Teknologi</a> •
-  <a href="#-alur-sistem">Alur Sistem</a> •
-  <a href="#-instalasi">Instalasi</a> • 
-  <a href="#-roadmap-pengembangan">Roadmap</a>
-</p>
+Aplikasi ini menyediakan sistem hak akses berdasarkan peran pengguna sehingga setiap pengguna dapat mengakses fitur sesuai tanggung jawabnya.
 
-<p><a href="https://github.com/muhammadnafis23/my-bengkel-app">📦 Lihat Repository</a></p>
+## Fitur Utama
 
-</div>
+### 1. Dashboard
+- Ringkasan penjualan harian.
+- Jumlah transaksi.
+- Jumlah produk.
+- Informasi stok menipis.
+- Grafik penjualan.
+- Produk terlaris.
+- Aktivitas pergerakan stok terbaru.
 
----
+### 2. Manajemen Produk
+- Menampilkan daftar produk.
+- Menambahkan produk baru.
+- Mengedit informasi produk.
+- Menghapus produk.
+- Pengelompokan berdasarkan kategori.
+- Informasi harga modal dan harga jual.
+- Informasi stok dan stok minimum.
 
-## 📌 Tentang Project
+### 3. Manajemen Kategori
+- Menampilkan kategori produk.
+- Menambahkan kategori.
+- Mengedit kategori.
+- Menghapus kategori.
+- Mengatur status kategori.
 
-**My Bengkel App** adalah aplikasi manajemen bengkel berbasis web yang
-dirancang untuk membantu pengelolaan aktivitas operasional secara lebih
-terstruktur. Aplikasi ini menyediakan fitur kasir atau *Point of Sale*
-(POS), pengelolaan produk, pencatatan pergerakan stok, manajemen
-karyawan, serta laporan penjualan.
+### 4. POS / Kasir
+- Menampilkan produk untuk transaksi.
+- Pencarian produk berdasarkan nama atau SKU.
+- Menambahkan produk ke keranjang.
+- Mengatur jumlah barang.
+- Menghitung total pembayaran.
+- Validasi jumlah pembayaran.
+- Menghitung uang kembalian.
+- Menyimpan transaksi penjualan.
 
-Sistem menerapkan pembagian hak akses berdasarkan peran pengguna
-(*Role-Based Access Control*) sehingga setiap pengguna hanya dapat
-mengakses fitur sesuai tanggung jawabnya.
+### 5. Riwayat Transaksi
+- Menampilkan daftar transaksi.
+- Melihat detail transaksi.
+- Menampilkan informasi kasir.
+- Melihat rincian barang yang dibeli.
+- Mencetak struk transaksi.
+- Mengajukan pembatalan transaksi.
 
-> \[!NOTE\] Project ini masih dalam tahap pengembangan. Fitur
-> persetujuan dan penolakan pengajuan pembatalan transaksi oleh Owner,
-> pengujian menyeluruh, serta deployment masih menjadi pekerjaan
-> lanjutan.
+### 6. Manajemen Pembatalan Transaksi
+- Mengajukan pembatalan transaksi.
+- Meninjau pengajuan pembatalan.
+- Menyetujui atau menolak pengajuan.
+- Mencatat alasan pembatalan.
+- Mengembalikan stok secara otomatis ketika transaksi dibatalkan.
 
-## ✨ Fitur Utama
+### 7. Manajemen Inventaris
+- Mencatat barang masuk.
+- Mencatat barang keluar.
+- Melakukan penyesuaian stok.
+- Mencatat alasan perubahan stok.
+- Melihat riwayat pergerakan stok.
+- Menyimpan informasi stok sebelum dan sesudah perubahan.
 
-<details open>
-<summary>
-<strong>📊 Dashboard & Ringkasan</strong>
-</summary>
+### 8. Manajemen Karyawan
+- Menambahkan akun karyawan.
+- Mengedit informasi karyawan.
+- Menghapus akun karyawan.
+- Mengatur peran pengguna.
 
--   Ringkasan penjualan dan jumlah transaksi hari ini.
--   Jumlah produk dan indikator stok menipis.
--   Grafik penjualan berdasarkan periode.
--   Daftar produk terlaris.
--   Aktivitas pergerakan stok terbaru.
--   Transaksi yang dibatalkan tidak dihitung sebagai penjualan selesai.
+### 9. Laporan
+- Menampilkan ringkasan penjualan.
+- Menampilkan jumlah transaksi.
+- Menampilkan produk terjual.
+- Menampilkan produk terlaris.
+- Filter laporan berdasarkan periode tanggal.
 
+## Hak Akses Pengguna
 
-</details>
-<details open>
-<summary>
-<strong>🛒 Point of Sale (POS) & Transaksi</strong>
-</summary>
+Aplikasi memiliki tiga jenis peran pengguna:
 
--   Pencarian produk berdasarkan nama atau SKU.
--   Keranjang belanja dengan pengaturan kuantitas.
--   Perhitungan subtotal dan total otomatis.
--   Validasi stok dan harga kembali di sisi backend saat checkout.
--   Pembayaran tunai, nominal pembayaran, dan perhitungan kembalian.
--   Nomor invoice unik.
--   Detail transaksi dan cetak struk.
--   Snapshot nama produk, SKU, dan harga pada detail transaksi.
+| Role | Hak Akses |
+|---|---|
+| Owner | Mengakses seluruh fitur aplikasi dan mengelola karyawan. |
+| Kasir | Mengakses POS, riwayat transaksi, dan pengajuan pembatalan. |
+| Gudang | Mengakses inventaris dan riwayat pergerakan stok. |
 
+Owner memiliki akses penuh terhadap seluruh fitur aplikasi.
 
-</details>
-<details>
-<summary>
-<strong>📦 Produk & Kategori</strong>
-</summary>
+## Teknologi yang Digunakan
 
--   Tambah, lihat, ubah, dan hapus data produk.
--   Pengelolaan kategori produk.
--   Informasi SKU, satuan, harga modal, harga jual, stok, dan batas
-    minimum stok.
--   Status aktif/nonaktif produk.
--   Perubahan stok dilakukan melalui pencatatan pergerakan stok, bukan
-    dengan mengubah stok langsung dari formulir produk.
+- **Backend:** Laravel 13
+- **Programming Language:** PHP 8.3
+- **Database:** MySQL / MariaDB
+- **Frontend:** HTML, CSS, JavaScript
+- **CSS Framework:** Bootstrap 5.3
+- **Template Engine:** Laravel Blade
+- **Development Environment:** Laragon
+- **Version Control:** Git & GitHub
 
+## Persyaratan Sistem
 
-</details>
-<details>
-<summary>
-<strong>🔄 Pergerakan Stok</strong>
-</summary>
+Sebelum menjalankan aplikasi, pastikan perangkat telah memiliki:
 
--   Pencatatan stok masuk.
--   Pencatatan stok keluar.
--   Pencatatan penyesuaian stok.
--   Riwayat jumlah stok sebelum dan sesudah perubahan.
--   Pencatatan pengguna, waktu, referensi transaksi, dan alasan.
--   Validasi agar stok tidak menjadi negatif.
+- PHP 8.3 atau versi yang sesuai dengan kebutuhan proyek.
+- Composer.
+- Node.js dan NPM.
+- MySQL atau MariaDB.
+- Git.
+- Laragon atau lingkungan server lokal lainnya.
 
+## Instalasi
 
-</details>
-<details>
-<summary>
-<strong>👥 Manajemen Karyawan & Hak Akses</strong>
-</summary>
+### 1. Clone Repository
 
--   Pengelolaan akun Kasir dan Gudang.
--   Pengaturan peran pengguna.
--   Aktivasi dan deaktivasi akun.
--   Password disimpan menggunakan mekanisme hashing Laravel.
--   Pembatasan akses halaman berdasarkan role di backend.
-
-
-</details>
-<details>
-<summary>
-<strong>🧾 Pembatalan Transaksi</strong>
-</summary>
-
--   Owner dapat membatalkan transaksi yang selesai.
--   Alasan pembatalan dicatat.
--   Stok produk dikembalikan ketika pembatalan berhasil.
--   Pergerakan stok pengembalian tercatat dalam riwayat.
--   Informasi pembatalan dan pihak yang melakukan pembatalan tersimpan
-    sebagai audit.
-
-**Alur pengajuan oleh Kasir:** Kasir dapat mengirim pengajuan pembatalan
-dengan alasan. Pengajuan disimpan sebagai `pending` dan transaksi tetap
-berstatus selesai sampai diproses oleh Owner. Halaman daftar pengajuan
-untuk Owner sudah tersedia, sedangkan proses persetujuan dan penolakan
-masih dalam pengembangan.
-
-
-</details>
-<details>
-<summary>
-<strong>📈 Laporan</strong>
-</summary>
-
--   Filter laporan berdasarkan rentang tanggal.
--   Ringkasan penjualan dan transaksi selesai.
--   Jumlah produk terjual.
--   Produk terlaris.
--   Daftar transaksi sesuai periode laporan.
-
-
-</details>
-## 🧑‍💼 Struktur Peran
-
-| Peran | Tanggung Jawab |
-|:---|:---|
-| **Owner** | Mengakses dashboard, data produk dan kategori, akun karyawan, laporan, serta pengelolaan pembatalan transaksi. |
-| **Kasir** | Melayani transaksi melalui POS, melihat riwayat dan detail transaksi, serta mengajukan pembatalan transaksi. |
-| **Gudang** | Mengelola pencatatan stok masuk, stok keluar, penyesuaian, dan melihat riwayat pergerakan stok. |
-
-## 🧰 Teknologi
-
-| Teknologi | Kegunaan |
-|:---|:---|
-| [Laravel 13](https://laravel.com/) | Backend framework dan pola MVC |
-| [PHP 8.3](https://www.php.net/) | Bahasa pemrograman backend |
-| [MySQL](https://www.mysql.com/) | Database relasional |
-| [Blade](https://laravel.com/docs/blade) | Template view |
-| [Bootstrap 5.3](https://getbootstrap.com/) | Styling dan komponen antarmuka |
-| [Alpine.js](https://alpinejs.dev/) | Interaksi antarmuka |
-| [Chart.js](https://www.chartjs.org/) | Visualisasi grafik dashboard |
-
-## 🗺️ Alur Sistem
-
-Diagram berikut menggambarkan alur utama aplikasi berdasarkan peran
-pengguna dan proses transaksi.
-
-```mermaid
-flowchart TD
-    A([Login]) --> B{Validasi Role}
-
-    B -->|Owner| C[Dashboard Admin]
-    B -->|Kasir| D[Halaman POS]
-    B -->|Gudang| E[Manajemen Stok]
-
-    C --> G[Laporan]
-    C --> H[Inventaris]
-    C --> I[Manajemen Pengguna]
-
-    D --> J[Keranjang]
-    J --> K[Pembayaran]
-    K --> L[Validasi Backend]
-    L --> M[Transaksi Berhasil]
-    M --> N[Stok Berkurang]
-    M --> O[Cetak Struk]
-
-    E --> P[Stok Masuk / Keluar]
-    P --> Q[Riwayat Pergerakan Stok]
+```bash
+git clone https://github.com/muhammadnafis23/my-bengkel-app.git bengkel-management
 ```
 
-### 🔁 Alur Checkout
+Masuk ke direktori proyek:
 
-1.  Kasir memilih produk dan memasukkannya ke keranjang.
-2.  Sistem menghitung total belanja.
-3.  Kasir memasukkan nominal pembayaran.
-4.  Backend memvalidasi ulang produk, harga, dan ketersediaan stok.
-5.  Jika valid, transaksi disimpan dan stok dikurangi.
-6.  Sistem mencatat pergerakan stok serta menyediakan struk transaksi.
-
-## ⚙️ Instalasi
-
-Panduan berikut menggunakan **Windows + Laragon** sebagai lingkungan
-pengembangan.
-
-### 1. Persyaratan
-
-Pastikan perangkat sudah memiliki:
-
--   PHP 8.3 atau kompatibel dengan Laravel 13.
--   Composer.
--   Node.js dan npm.
--   MySQL.
--   Git.
--   Laragon atau lingkungan server lokal setara.
-
-### 2. Clone Repository
-
-``` bash
-git clone https://github.com/muhammadnafis23/my-bengkel-app.git
-cd my-bengkel-app
+```bash
+cd bengkel-management
 ```
 
-### 3. Install Dependency
+### 2. Pilih Branch Pengembangan
 
-``` bash
+Jika ingin menggunakan versi pengembangan:
+
+```bash
+git checkout development-branch
+```
+
+### 3. Install Dependencies
+
+Install dependensi PHP:
+
+```bash
 composer install
+```
+
+Install dependensi frontend:
+
+```bash
 npm install
 ```
 
-### 4. Siapkan File Environment
+### 4. Konfigurasi Environment
 
-Salin `.env.example` menjadi `.env`:
+Buat file `.env` berdasarkan file contoh:
 
-``` powershell
-Copy-Item .env.example .env
+```bash
+copy .env.example .env
 ```
+
+Generate application key:
+
+```bash
+php artisan key:generate
+```
+
+### 5. Konfigurasi Database
 
 Buat database MySQL dengan nama:
 
-``` sql
-CREATE DATABASE bengkel_management;
+```text
+bengkel_management
 ```
 
-Sesuaikan konfigurasi database pada file `.env`:
+Kemudian sesuaikan konfigurasi database di file `.env`:
 
-``` dotenv
-APP_NAME="My Bengkel App"
-APP_ENV=local
-APP_DEBUG=true
-APP_URL=http://127.0.0.1:8000
-
+```env
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
@@ -267,178 +184,107 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-> Sesuaikan `DB_USERNAME` dan `DB_PASSWORD` dengan konfigurasi MySQL
-> lokal masing-masing. Jangan menggunakan konfigurasi contoh ini untuk
-> production tanpa penyesuaian.
+Sesuaikan username dan password dengan konfigurasi MySQL lokal.
 
-### 5. Generate Application Key
+### 6. Menyiapkan Database
 
-``` bash
-php artisan key:generate
-```
+Ada dua cara untuk menyiapkan database.
 
-### 6. Jalankan Migration
+**Opsi A — Menggunakan database hasil backup**
 
-``` bash
+Import file SQL backup database melalui HeidiSQL agar mendapatkan struktur tabel dan data yang sudah disiapkan.
+
+**Opsi B — Membuat database dari migration**
+
+Jika menggunakan database kosong, jalankan:
+
+```bash
 php artisan migrate
 ```
 
-> Jika project menyediakan seeder, jalankan `php artisan db:seed`
-> setelah memastikan isi seeder dan akun awal yang dibuat. Jangan
-> mengasumsikan akun demo tertentu tersedia.
+Selanjutnya, siapkan role, akun awal, kategori, dan data produk melalui seeder atau aplikasi sesuai kebutuhan.
 
-### 7. Jalankan Aplikasi
+Catatan: Migration tidak otomatis mengisi seluruh data demo. Periksa seeder proyek sebelum menjalankan `php artisan db:seed`.
 
-Buka dua terminal di folder project.
+### 7. Build Frontend
 
-**Terminal 1 --- Laravel:**
-
-``` bash
-php artisan serve
-```
-
-**Terminal 2 --- Vite:**
-
-``` bash
-npm run dev
-```
-
-Buka aplikasi melalui:
-
-**http://127.0.0.1:8000**
-
-### 8. Perintah Pengembangan
-
-``` bash
-# Menjalankan test
-php artisan test
-
-# Melihat daftar route
-php artisan route:list
-
-# Membersihkan cache aplikasi
-php artisan optimize:clear
-
-# Build asset untuk deployment
+```bash
 npm run build
 ```
 
-## 🗂️ Struktur Project
+### 8. Jalankan Aplikasi
 
-Berikut gambaran direktori utama Laravel. Detail file dapat berkembang
-mengikuti implementasi project.
+```bash
+php artisan optimize:clear
+php artisan storage:link
+php artisan serve
+```
 
-``` text
-my-bengkel-app/
+Buka aplikasi melalui browser:
+
+```text
+http://127.0.0.1:8000
+```
+
+## Struktur Proyek
+
+Beberapa direktori utama Laravel yang digunakan:
+
+```text
+bengkel-management/
 ├── app/
 │   ├── Http/
 │   │   ├── Controllers/
 │   │   └── Middleware/
 │   └── Models/
+├── bootstrap/
 ├── database/
 │   ├── migrations/
 │   └── seeders/
+├── public/
 ├── resources/
-│   ├── css/
-│   ├── js/
 │   └── views/
+│       ├── layouts/
+│       ├── products/
+│       ├── categories/
+│       ├── employees/
+│       ├── pos/
+│       ├── transactions/
+│       ├── reports/
+│       └── stock-movements/
 ├── routes/
 │   └── web.php
-├── public/
-├── tests/
 ├── .env.example
-└── README.md
+└── composer.json
 ```
 
-## 🔐 Catatan Keamanan
+## Keamanan
 
--   File `.env` tidak boleh di-commit ke repository.
--   Gunakan password yang kuat untuk akun aplikasi.
--   Password pengguna harus disimpan dalam bentuk hash.
--   Validasi transaksi dan stok harus dilakukan di backend.
--   Gunakan transaksi database dan row locking untuk operasi stok yang
-    kritis.
--   Pastikan middleware/otorisasi diterapkan pada route yang membutuhkan
-    hak akses tertentu.
--   Untuk deployment, nonaktifkan debug (`APP_DEBUG=false`) dan gunakan
-    konfigurasi production yang sesuai.
+Beberapa mekanisme keamanan yang diterapkan:
 
-## 🚧 Roadmap Pengembangan
+- Autentikasi pengguna.
+- Pembatasan akses berdasarkan role.
+- Password disimpan menggunakan hashing.
+- Validasi input pada proses penyimpanan.
+- CSRF protection.
+- Validasi stok saat transaksi.
+- Pencatatan aktivitas perubahan stok.
+- Penggunaan database transaction untuk menjaga konsistensi data.
 
-| Modul | Status |
-|:---|:---:|
-| Setup Laravel dan database | ✅ Selesai |
-| Login, logout, dan role middleware | ✅ Selesai |
-| Dashboard | ✅ Selesai |
-| Manajemen kategori | ✅ Selesai |
-| Manajemen produk | ✅ Selesai |
-| Pergerakan stok | ✅ Selesai |
-| POS dan checkout | ✅ Selesai |
-| Manajemen karyawan | ✅ Selesai |
-| Riwayat dan detail transaksi | ✅ Selesai |
-| Cetak struk | ✅ Selesai |
-| Pembatalan transaksi oleh Owner | ✅ Selesai |
-| Laporan | ✅ Selesai |
-| Pengajuan pembatalan oleh Kasir | ✅ Selesai |
-| Daftar pengajuan untuk Owner | ✅ Selesai |
-| Persetujuan/penolakan pengajuan oleh Owner | 🔄 Dalam pengembangan |
-| Pengujian menyeluruh dan deployment | ⏳ Berikutnya |
+## Pengembangan
 
-## 🌿 Branch Git
+Proyek ini masih dapat dikembangkan lebih lanjut, baik dari sisi antarmuka, pengelolaan transaksi, maupun peningkatan fungsionalitas sistem.
 
-Branch pengembangan yang digunakan:
+## Status Proyek
 
--   `main` --- branch utama.
--   `development-branch` --- branch pengembangan aktif.
+**Development**
 
-Contoh alur kerja:
+Proyek dikembangkan secara bertahap dan masih dalam proses penyempurnaan.
 
-``` bash
-# Pindah ke branch pengembangan
-git switch development-branch
+## Kontributor
 
-# Periksa perubahan
-git status
+Dikembangkan sebagai proyek pengembangan aplikasi manajemen bengkel secara kolaboratif.
 
-# Simpan perubahan
-git add .
-git commit -m "feat: deskripsi perubahan"
+## Lisensi
 
-# Push ke GitHub
-git push origin development-branch
-```
-
-Hindari memasukkan `.env`, file rahasia, kredensial, atau file lokal
-yang tidak diperlukan ke dalam commit.
-
-## 🤝 Kontribusi
-
-Kontribusi, ide, dan laporan bug sangat dihargai.
-
-1.  Fork repository.
-2.  Buat branch fitur: `git switch -c fitur/nama-fitur`.
-3.  Lakukan perubahan dan pengujian.
-4.  Commit dengan pesan yang jelas.
-5.  Push branch dan ajukan Pull Request.
-
-## 📄 Lisensi
-
-Lisensi project belum ditentukan. Sampai file lisensi ditambahkan ke
-repository, jangan mengasumsikan project ini menggunakan lisensi
-open-source tertentu.
-
-## 👨‍💻 Pengembang
-
-**My Bengkel App**
-
-Repository:
-[github.com/muhammadnafis23/my-bengkel-app](https://github.com/muhammadnafis23/my-bengkel-app)
-
----
-
-<div align="center">
-Dibuat untuk membantu operasional bengkel menjadi lebih teratur,
-efisien, dan mudah dipantau. 🔧
-
-**Thank you for visiting this repository!**
-</div>
+Lisensi proyek belum ditentukan.
