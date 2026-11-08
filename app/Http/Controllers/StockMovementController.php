@@ -12,13 +12,59 @@ use Illuminate\Http\RedirectResponse;
 
 class StockMovementController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $movements = StockMovement::with(['product', 'user'])
-            ->latest()
-            ->paginate(15);
+        $search = trim($request->input('search', ''));
 
-        return view('stock-movements.index', compact('movements'));
+        $movements = StockMovement::with(['product', 'user'])
+            ->when($search !== '', function ($query) use ($search) {
+                $query->where(function ($query) use ($search) {
+
+                    // Pencarian nama produk dan SKU.
+                    $query->whereHas('product', function ($productQuery) use ($search) {
+                        $productQuery->where('name', 'like', "%{$search}%")
+                            ->orWhere('sku', 'like', "%{$search}%");
+                    })
+
+                    // Pencarian nama pengguna.
+                    ->orWhereHas('user', function ($userQuery) use ($search) {
+                        $userQuery->where('name', 'like', "%{$search}%");
+                    })
+
+                    // Pencarian catatan.
+                    ->orWhere('notes', 'like', "%{$search}%")
+
+                    // Pencarian jenis pergerakan.
+                    ->orWhere('movement_type', 'like', "%{$search}%");
+
+                    // Pencarian menggunakan istilah bahasa Indonesia.
+                    $typeKeywords = [
+                        'stok masuk' => 'incoming',
+                        'masuk' => 'incoming',
+                        'stok keluar' => 'outgoing',
+                        'keluar' => 'outgoing',
+                        'penyesuaian' => 'adjustment',
+                        'penjualan' => 'sale',
+                    ];
+
+                    foreach ($typeKeywords as $keyword => $type) {
+                        if (
+                            stripos($search, $keyword) !== false ||
+                            stripos($keyword, $search) !== false
+                        ) {
+                            $query->orWhere('movement_type', $type);
+                        }
+                    }
+                });
+            })
+            ->latest()
+            ->paginate(15)
+            ->withQueryString();
+
+        return view('stock-movements.index', compact(
+            'movements',
+            'search'
+        ));
     }
 
     public function create(): View
@@ -48,7 +94,9 @@ class StockMovementController extends Controller
         ) {
             return back()
                 ->withInput()
-                ->withErrors(['quantity' => 'Jumlah stok masuk dan keluar harus lebih dari 0.']);
+                ->withErrors([
+                    'quantity' => 'Jumlah stok masuk dan keluar harus lebih dari 0.'
+                ]);
         }
 
         if (
@@ -57,7 +105,9 @@ class StockMovementController extends Controller
         ) {
             return back()
                 ->withInput()
-                ->withErrors(['notes' => 'Alasan wajib diisi untuk stok keluar dan penyesuaian stok.']);
+                ->withErrors([
+                    'notes' => 'Alasan wajib diisi untuk stok keluar dan penyesuaian stok.'
+                ]);
         }
 
         try {
@@ -100,7 +150,9 @@ class StockMovementController extends Controller
         } catch (\RuntimeException $exception) {
             return back()
                 ->withInput()
-                ->withErrors(['quantity' => $exception->getMessage()]);
+                ->withErrors([
+                    'quantity' => $exception->getMessage()
+                ]);
         }
 
         return redirect()->route('stock-movements.index')

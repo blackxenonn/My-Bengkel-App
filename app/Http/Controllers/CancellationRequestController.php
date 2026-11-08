@@ -17,18 +17,63 @@ class CancellationRequestController extends Controller
     /**
      * Menampilkan daftar pengajuan pembatalan transaksi.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
+        $search = trim($request->input('search', ''));
+
         $cancellationRequests = CancellationRequest::with([
             'transaction',
             'requester',
             'reviewer',
         ])
+            ->when($search !== '', function ($query) use ($search) {
+                $query->where(function ($query) use ($search) {
+                    // Cari berdasarkan nomor invoice.
+                    $query->whereHas('transaction', function ($transactionQuery) use ($search) {
+                        $transactionQuery->where(
+                            'invoice_number',
+                            'like',
+                            "%{$search}%"
+                        );
+                    })
+
+                    // Cari berdasarkan nama Kasir.
+                    ->orWhereHas('requester', function ($requesterQuery) use ($search) {
+                        $requesterQuery->where(
+                            'name',
+                            'like',
+                            "%{$search}%"
+                        );
+                    })
+
+                    // Cari berdasarkan alasan pengajuan.
+                    ->orWhere('reason', 'like', "%{$search}%")
+
+                    // Cari berdasarkan status.
+                    ->orWhere('status', 'like', "%{$search}%");
+
+                    // Mendukung pencarian menggunakan status bahasa Indonesia.
+                    $statusKeywords = [
+                        'menunggu' => 'pending',
+                        'disetujui' => 'approved',
+                        'ditolak' => 'rejected',
+                    ];
+
+                    foreach ($statusKeywords as $keyword => $status) {
+                        if (stripos($keyword, $search) !== false ||
+                            stripos($search, $keyword) !== false) {
+                            $query->orWhere('status', $status);
+                        }
+                    }
+                });
+            })
             ->latest()
-            ->paginate(10);
+            ->paginate(10)
+            ->withQueryString();
 
         return view('cancellation-requests.index', compact(
-            'cancellationRequests'
+            'cancellationRequests',
+            'search'
         ));
     }
 

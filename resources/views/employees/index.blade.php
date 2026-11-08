@@ -5,12 +5,6 @@
 
 @section('content')
 
-<div class="mb-4">
-    <p class="text-muted mb-0">
-        Daftar akun pengguna sistem Bengkel Management.
-    </p>
-</div>
-
 {{-- Pesan Notifikasi --}}
 @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -40,15 +34,54 @@
     </div>
 @endif
 
-{{-- Tombol Tambah Karyawan --}}
-<div class="d-flex justify-content-end mb-4">
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+    <p class="text-muted mb-0">
+        Kelola akun karyawan, informasi pengguna, dan hak akses berdasarkan jabatan.
+    </p>
+
     <a href="{{ route('employees.create') }}" class="btn btn-primary">
-        + Tambah Karyawan
+        <i class="bi bi-plus-lg"></i> Tambah Karyawan
     </a>
 </div>
 
 <div class="card border-0 shadow-sm">
     <div class="card-body">
+
+        {{-- Form Pencarian --}}
+        <form action="{{ route('employees.index') }}"
+              method="GET"
+              data-live-search
+              class="mb-3">
+
+            <div class="input-group">
+                <input
+                    type="text"
+                    name="search"
+                    class="form-control"
+                    placeholder="Cari nama, username, email, atau role..."
+                    value="{{ $search }}"
+                    data-live-search-input
+                    autocomplete="off"
+                >
+
+                <button type="submit" class="btn btn-primary">
+                    Cari
+                </button>
+
+                <a href="{{ route('employees.index') }}"
+                   class="btn btn-secondary">
+                    Reset
+                </a>
+            </div>
+        </form>
+
+        @if($search !== '')
+            <p class="text-muted small mb-3">
+                Menampilkan hasil pencarian untuk:
+                <strong>{{ $search }}</strong>
+                ({{ $employees->total() }} data ditemukan)
+            </p>
+        @endif
 
         {{-- Tabel Karyawan --}}
         <div class="table-responsive">
@@ -142,9 +175,12 @@
 
                     @empty
                         <tr>
-                            <td colspan="7"
-                                class="text-center text-muted py-4">
-                                Belum ada data karyawan.
+                            <td colspan="7" class="text-center text-muted py-4">
+                                @if($search !== '')
+                                    Karyawan dengan kata kunci "{{ $search }}" tidak ditemukan.
+                                @else
+                                    Belum ada data karyawan.
+                                @endif
                             </td>
                         </tr>
                     @endforelse

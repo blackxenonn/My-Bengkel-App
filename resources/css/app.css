@@ -10,11 +10,46 @@
 }
 
 /* ========================================
+   GLOBAL THEME VARIABLES
+======================================== */
+
+:root {
+    color-scheme: light;
+
+    --app-background: #f5f6fa;
+    --app-surface: #ffffff;
+    --app-text: #172033;
+    --app-muted: #6b7280;
+    --app-border: #e5e7eb;
+    --app-input-background: #ffffff;
+}
+
+/* DARK MODE */
+
+html[data-bs-theme="dark"] {
+    color-scheme: dark;
+
+    --app-background: #111827;
+    --app-surface: #1f2937;
+    --app-text: #f3f4f6;
+    --app-muted: #9ca3af;
+    --app-border: #374151;
+    --app-input-background: #1f2937;
+}
+
+/* ========================================
    GLOBAL STYLE
 ======================================== */
 
 body {
-    background: #f5f6fa;
+    background: var(--app-background);
+    color: var(--app-text);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.main-content {
+    background: var(--app-background);
+    color: var(--app-text);
 }
 
 /* ========================================
@@ -36,22 +71,16 @@ body {
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* HOVER */
 .sidebar a:hover {
     background: #29364d;
     color: white;
 }
 
-/* ACTIVE MENU */
 .sidebar a.active {
     background: #0d6efd;
     color: white;
     font-weight: 600;
 }
-
-/* ========================================
-   BRAND
-======================================== */
 
 .brand {
     color: white;
@@ -67,6 +96,165 @@ body {
 .main-content {
     padding: 6px 25px 25px !important;
     min-height: 100vh;
+}
+
+.page-heading {
+    margin-bottom: 20px;
+}
+
+/* ========================================
+   TOP NAVBAR
+======================================== */
+
+.top-navbar {
+    border-bottom: 1px solid var(--app-border) !important;
+}
+
+.navbar-brand-text {
+    color: var(--app-text) !important;
+}
+
+.navbar-user-info strong {
+    color: var(--app-text) !important;
+}
+
+.navbar-user-info small {
+    color: var(--app-muted) !important;
+}
+
+.navbar-avatar {
+    background: #e8eeff;
+    color: #2456b5;
+}
+
+/* ========================================
+   DARK MODE COMPONENT OVERRIDES
+======================================== */
+
+html[data-bs-theme="dark"] .card,
+html[data-bs-theme="dark"] .modal-content,
+html[data-bs-theme="dark"] .dropdown-menu,
+html[data-bs-theme="dark"] .list-group-item {
+    background-color: var(--app-surface);
+    color: var(--app-text);
+    border-color: var(--app-border);
+}
+
+html[data-bs-theme="dark"] .card-header,
+html[data-bs-theme="dark"] .card-footer {
+    background-color: #273449;
+    color: var(--app-text);
+    border-color: var(--app-border);
+}
+
+html[data-bs-theme="dark"] .table {
+    --bs-table-bg: var(--app-surface);
+    --bs-table-color: var(--app-text);
+    --bs-table-border-color: var(--app-border);
+    --bs-table-striped-bg: #263244;
+    --bs-table-striped-color: var(--app-text);
+    --bs-table-hover-bg: #2d3a4e;
+    --bs-table-hover-color: var(--app-text);
+}
+
+html[data-bs-theme="dark"] .form-control,
+html[data-bs-theme="dark"] .form-select {
+    background-color: var(--app-input-background);
+    color: var(--app-text);
+    border-color: var(--app-border);
+}
+
+html[data-bs-theme="dark"] .form-control::placeholder {
+    color: #9ca3af;
+}
+
+html[data-bs-theme="dark"] .form-control:focus,
+html[data-bs-theme="dark"] .form-select:focus {
+    background-color: var(--app-input-background);
+    color: var(--app-text);
+}
+
+html[data-bs-theme="dark"] .form-control:disabled,
+html[data-bs-theme="dark"] .form-select:disabled {
+    background-color: #273449;
+}
+
+html[data-bs-theme="dark"] .text-dark {
+    color: #f3f4f6 !important;
+}
+
+html[data-bs-theme="dark"] .text-muted {
+    color: #9ca3af !important;
+}
+
+html[data-bs-theme="dark"] .bg-white {
+    background-color: var(--app-surface) !important;
+}
+
+html[data-bs-theme="dark"] hr {
+    border-color: var(--app-border);
+}
+
+html[data-bs-theme="dark"] .pagination .page-link {
+    background-color: var(--app-surface);
+    color: #93c5fd;
+    border-color: var(--app-border);
+}
+
+html[data-bs-theme="dark"] .pagination .page-item.active .page-link {
+    background-color: #0d6efd;
+    color: #ffffff;
+    border-color: #0d6efd;
+}
+
+html[data-bs-theme="dark"] .pagination .page-item.disabled .page-link {
+    background-color: #273449;
+    color: #6b7280;
+}
+
+/* ========================================
+   DARK MODE TABLE HEADER
+======================================== */
+
+html[data-bs-theme="dark"] .table-light,
+html[data-bs-theme="dark"] .table-light > th,
+html[data-bs-theme="dark"] .table-light > td,
+html[data-bs-theme="dark"] .table thead th {
+    background-color: #273449 !important;
+    color: #f3f4f6 !important;
+    border-color: #374151 !important;
+}
+
+html[data-bs-theme="dark"] .table thead {
+    border-color: #374151;
+}
+
+html[data-bs-theme="dark"] .table thead th {
+    font-weight: 600;
+}
+
+/* ========================================
+   THEME TOGGLE BUTTON
+======================================== */
+
+.theme-toggle {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--app-border);
+    border-radius: 50%;
+    background: var(--app-surface);
+    color: var(--app-text);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.theme-toggle:hover {
+    background: var(--app-background);
+    transform: rotate(15deg);
 }
 
 /* ========================================
@@ -94,4 +282,29 @@ body {
     .btn {
         display: none !important;
     }
+}
+
+/* Animasi sidebar saat dibuka dan ditutup */
+.sidebar {
+    transition:
+        width 0.3s ease,
+        max-width 0.3s ease,
+        flex-basis 0.3s ease;
+}
+
+/* Animasi pergeseran konten utama */
+.main-content {
+    transition:
+        margin-left 0.3s ease,
+        width 0.3s ease,
+        flex-basis 0.3s ease;
+}
+
+/* Animasi teks dan elemen menu */
+.sidebar .sidebar-text,
+.sidebar .sidebar-section-title,
+.sidebar .sidebar-brand-text {
+    transition:
+        opacity 0.2s ease,
+        transform 0.3s ease;
 }

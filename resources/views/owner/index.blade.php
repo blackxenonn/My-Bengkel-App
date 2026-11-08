@@ -4,10 +4,10 @@
 
 @section('content')
 
-<div class="mb-4">
-    <p class="text-muted">
-        Pusat kontrol untuk memantau dan mengelola operasional bengkel.
-    </p>
+<div>
+    <p class="text-muted mb-3">
+    Kelola informasi dan akun Owner yang memiliki akses penuh ke sistem.
+</p>
 </div>
 
 {{-- Ringkasan Data --}}

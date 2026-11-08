@@ -5,8 +5,11 @@
 
 @section('content')
 
-{{-- Tombol Tambah Produk --}}
-<div class="d-flex justify-content-end mb-4">
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+    <p class="text-muted mb-0">
+        Kelola seluruh data produk, harga, kategori, dan informasi stok bengkel.
+    </p>
+
     <a href="{{ route('products.create') }}" class="btn btn-primary">
         <i class="bi bi-plus-lg"></i> Tambah Produk
     </a>
@@ -38,6 +41,43 @@
 {{-- Tabel Produk --}}
 <div class="card border-0 shadow-sm">
     <div class="card-body">
+
+        {{-- FORM PENCARIAN --}}
+        <form action="{{ route('products.index') }}"
+            method="GET"
+            data-live-search
+            class="mb-3">
+
+            <div class="input-group">
+                <input
+                    type="text"
+                    name="search"
+                    class="form-control"
+                    placeholder="Cari nama produk, SKU, atau kategori..."
+                    value="{{ $search }}"
+                    data-live-search-input
+                    autocomplete="off"
+                >
+
+                <button type="submit" class="btn btn-primary">
+                    Cari
+                </button>
+
+                <a href="{{ route('products.index') }}"
+                class="btn btn-secondary">
+                    Reset
+                </a>
+            </div>
+        </form>
+
+        {{-- INFORMASI HASIL PENCARIAN --}}
+        @if($search !== '')
+            <div class="mb-3 text-muted small">
+                Menampilkan hasil pencarian untuk:
+                <strong>{{ $search }}</strong>
+                ({{ $products->total() }} produk ditemukan)
+            </div>
+        @endif
 
         <div class="table-responsive">
             <table class="table table-hover align-middle">
@@ -114,7 +154,14 @@
                     @empty
                         <tr>
                             <td colspan="8" class="text-center text-muted py-4">
-                                Belum ada data produk.
+
+                                @if($search !== '')
+                                    <i class="bi bi-search fs-3 d-block mb-2"></i>
+                                    Tidak ada produk yang cocok dengan pencarian "{{ $search }}".
+                                @else
+                                    Belum ada data produk.
+                                @endif
+
                             </td>
                         </tr>
                     @endforelse
@@ -123,7 +170,7 @@
             </table>
         </div>
 
-        {{-- Pagination --}}
+        {{-- PAGINATION --}}
         <div class="mt-3">
             {{ $products->links() }}
         </div>
